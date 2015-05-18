@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<canvas id = 'c' width = '400' height = '400'></canvas>
+	<script>
+
+	function createShader(str,type){
+		var shader = gl.createShader(type);
+		gl.shaderSource(shader,str);
+		gl.compileShader(shader);
+		return shader;
+
+	}
+	function createProgram(vstr , fstr){
+		var program = gl.createProgram();
+		var vshader = createShader(vstr, gl.VERTEX_SHADER);
+		var fshader = createShader(fstr, gl.FRAGMENT_SHADER);
+		gl.attachShader(program,vshader);
+		gl.attachShader(program, fshader);
+		gl.linkprogram(program);
+		return program;
+	}
+	var c = document.getElementById('c');
+	var gl = c.getContext('experimental-webgl');
+
+	//To create some geometry we need some BUFFER to hold some VERTEX data
+	var vertexPosBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
+	var vertices = [-0.5, -0.5, 0, 0.5,-0.5, 0 , 0, 0.5, 0]
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
+																				//once and draw it several times
+
+	/*  2 
+	   /\
+	  /  \
+	0/____\1
+	*/
+
+	//Define VERTEX SHADER and FRAGMENT SHADER
+
+	var vs = 'attribute vec3 pos;' +
+			 'void main() { gl_Position = vec4(pos, 0, 1); }';
+	var fs = 'precision mediump float;' +
+			  'void main() { gl_FragColor = vec4(0,0.8,0,1); }';
+
+	var program = createProgram(vs,fs);
+	gl.useProgram(program);
+	program.vertexPosAttrib = gl.getAttributeLocation(program,'pos');
+	gl.enableVertexAttribArray(program.vertexPosArray);
+	gl.vertexAtribPointer(program.vertexPosAttrib, 2 , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+	gl.drawArrays(gl.TRIANGLES, 0 , 3);
+
+	</script>
+
+
+</html>
