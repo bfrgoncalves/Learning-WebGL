@@ -1,25 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<canvas id = 'c' width = '400' height = '400'></canvas>
+	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
 	<script>
-
-	function createShader(str,type){
-		var shader = gl.createShader(type);
-		gl.shaderSource(shader,str);
-		gl.compileShader(shader);
-		return shader;
-
-	}
-
-	function createProgram(vstr , fstr){
-		var program = gl.createProgram();
-		var vshader = createShader(vstr, gl.VERTEX_SHADER);
-		var fshader = createShader(fstr, gl.FRAGMENT_SHADER);
-		gl.attachShader(program,vshader);
-		gl.attachShader(program, fshader);
-		gl.linkProgram(program);
-		return program;
-	}
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
@@ -27,14 +10,15 @@
 	//To create some geometry we need some BUFFER to hold some VERTEX data
 	var vertexPosBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
-	var vertices = [-0.5, -0.5, 0.5, -0.5, 0, 0.5] //Only using 2D coordinates x0(-0.5,-0.5) x1(0.5,-0.5) x2(0,0.5)
+	var vertices = [-1, -1 , 1, -1, -1, 1 , 1, 1] //coordenates range from -1 to 1. So this will cover all the canvas
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
 																				//once and draw it several times
 
-	/*  2 
-	   /\
-	  /  \
-	0/____\1
+	/*
+	 2___ 3 
+	 |\  |		//Square is defined in this case as a triangle strip, two triangles combined
+	 | \ | 
+	0|__\|1
 	*/
 
 	//Define VERTEX SHADER and FRAGMENT SHADER
@@ -50,7 +34,7 @@
 	program.vertexPosAttrib = gl.getAttribLocation(program,'pos');
 	gl.enableVertexAttribArray(program.vertexPosArray);
 	gl.vertexAttribPointer(program.vertexPosAttrib, 2 , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
-	gl.drawArrays(gl.TRIANGLES, 0 , 3);
+	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , 3);
 
 	</script>
 
