@@ -48,9 +48,9 @@
 	var program = createProgram(vs,fs);
 	console.log(program);
 	gl.useProgram(program);
-	program.vertexPosAttrib = gl.getAttributeLocation(program,'pos');
+	program.vertexPosAttrib = gl.getAttribLocation(program,'pos');
 	gl.enableVertexAttribArray(program.vertexPosArray);
-	gl.vertexAtribPointer(program.vertexPosAttrib, 2 , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+	gl.vertexAttribPointer(program.vertexPosAttrib, 2 , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
 	gl.drawArrays(gl.TRIANGLES, 0 , 3);
 
 	</script>
