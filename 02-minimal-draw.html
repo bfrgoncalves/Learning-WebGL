@@ -51,7 +51,7 @@
 	program.vertexPosAttrib = gl.getAttribLocation(program,'pos');
 	gl.enableVertexAttribArray(program.vertexPosArray);
 	gl.vertexAttribPointer(program.vertexPosAttrib, 2 , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
-	gl.drawArrays(gl.TRIANGLES, 4 , 3);
+	gl.drawArrays(gl.TRIANGLES, 0 , 3);
 
 	</script>
 
