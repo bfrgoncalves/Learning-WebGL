@@ -10,6 +10,7 @@
 		return shader;
 
 	}
+
 	function createProgram(vstr , fstr){
 		var program = gl.createProgram();
 		var vshader = createShader(vstr, gl.VERTEX_SHADER);
@@ -17,8 +18,10 @@
 		gl.attachShader(program,vshader);
 		gl.attachShader(program, fshader);
 		gl.linkProgram(program);
+		console.log(program);
 		return program;
 	}
+
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
 
@@ -40,9 +43,10 @@
 	var vs = 'attribute vec3 pos;' +
 			 'void main() { gl_Position = vec4(pos, 0, 1); }';
 	var fs = 'precision mediump float;' +
-			  'void main() { gl_FragColor = vec4(0,0.8,0,1); }';
+			  'void main() { gl_FragColor = vec4(0, 0.8, 0, 1); }';
 
 	var program = createProgram(vs,fs);
+	console.log(program);
 	gl.useProgram(program);
 	program.vertexPosAttrib = gl.getAttributeLocation(program,'pos');
 	gl.enableVertexAttribArray(program.vertexPosArray);
