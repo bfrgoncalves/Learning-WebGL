@@ -34,7 +34,7 @@
 	program.vertexPosAttrib = gl.getAttribLocation(program,'pos');
 	gl.enableVertexAttribArray(program.vertexPosArray);
 	gl.vertexAttribPointer(program.vertexPosAttrib, 2 , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
-	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , 3);
+	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , 4); //Now takes 4 vertex instead of 3 like the triangle
 
 	</script>
 
