@@ -24,13 +24,18 @@
 			//Mandelbrot set
 			float x = 0.0;
 			float y = 0.0;
+			float v = 10000.0; //To add more color to the fractile
+			float j = 10000.0;
+
 			for (int iteration = 0; iteration <100; ++iteration){
 				float xtemp = x*x-y*y+texCoord.x;
 				y = 2.0*x*y+texCoord.y;
 				x = xtemp;
+				v = min(v, abs(x*x+y*y));
+				j = min(j, x*y);
 				if (x*x+y*y >= 8.0) {
 					float d = float(iteration) / 20.0;
-					return vec4(d, d, d,1); //Returns the color based on iteration
+					return vec4(d + v, d, d + j,1); //Returns the color based on iteration
 				}
 			}
 			return vec4(0, 0, 0, 1); //returns black
