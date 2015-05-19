@@ -26,3 +26,25 @@ function createProgram(vstr , fstr){
 
 	return program;
 }
+
+
+function screenQuad(){ //Creates a buffer on the context and append the data to it. It will be used by the program
+
+	//To create some geometry we need some BUFFER to hold some VERTEX data
+	var vertexPosBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
+	var vertices = [-1, -1 , 1, -1, -1, 1 , 1, 1] //coordenates range from -1 to 1. So this will cover all the canvas
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
+																				//once and draw it several times
+	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
+	vertexPosBuffer.numItems = 4;
+	/*
+	 2___ 3 
+	 |\  |		//Square is defined in this case as a triangle strip, two triangles combined
+	 | \ | 
+	0|__\|1
+	*/
+
+	return vertexPosBuffer;
+
+}

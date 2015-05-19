@@ -25,25 +25,16 @@
 	var offset = [1, 1]; //it will add one to the texture coordenates. They will range from 0 to 2 instead
 
 	//To create some geometry we need some BUFFER to hold some VERTEX data
-	var vertexPosBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
-	var vertices = [-1, -1 , 1, -1, -1, 1 , 1, 1] //coordenates range from -1 to 1. So this will cover all the canvas
-	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
-																				//once and draw it several times
-	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
-	vertexPosBuffer.numItems = 4;
-	/*
-	 2___ 3 
-	 |\  |		//Square is defined in this case as a triangle strip, two triangles combined
-	 | \ | 
-	0|__\|1
-	*/
+	var vertexPosBuffer = screenQuad();
 
 	//Define VERTEX SHADER and FRAGMENT SHADER
 	vs = document.getElementById('vshader').textContent;
 	fs = document.getElementById('fshader').textContent;
 
+	console.log(fs);
+
 	var program = createProgram(vs,fs);
+	console.log(program);
 	gl.useProgram(program);
 	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
 	program.offsetUniform = gl.getUniformLocation(program,'uOffset'); //get the position of the uniform
