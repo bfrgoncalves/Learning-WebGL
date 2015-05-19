@@ -17,6 +17,8 @@
 	#endif
 		precision mediump int;
 		uniform vec2 uCanvasSize;
+		uniform vec2 uOffset;
+		uniform float uScale;
 
 		vec4 calc(vec2 texCoord){ //Function to calculate the color of every pixel of the fragment
 			//Color based on iteration
@@ -43,6 +45,7 @@
 			//gl_FragCoord gives the pixel position of the current fragment
 			//scale the texCoord by the canvasSize
 			vec2 texCoord = (gl_FragCoord.xy / uCanvasSize.xy) * 2.0 - vec2 (1.0,1.0);
+			texCoord = texCoord * uScale + uOffset;
 			gl_FragColor = calc(texCoord);
 		}
 	</script>
@@ -50,6 +53,8 @@
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
+	var Offset = [-0.5, 0]; //defines the offset and the scale to visualize all the fractile
+	var uScale = 1.35;
 
 	//To create some geometry we need some BUFFER to hold some VERTEX data
 	var vertexPosBuffer = screenQuad();
@@ -65,9 +70,13 @@
 	gl.useProgram(program);
 	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
 	program.canasSizeUniform = gl.getUniformLocation(program,'uCanvasSize'); //get the position of the uniform
+	program.uniformOffset = gl.getUniformLocation(program,'uOffset'); //gets the locations of the uniforms at the program
+	program.uniformScale = gl.getUniformLocation(program,'uScale');
 	gl.enableVertexAttribArray(program.vertexPosArray);
 	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
 	gl.uniform2f(program.canasSizeUniform, c.width, c.height); //passing the values to the location of the uniform inside the program
+	gl.uniform2f(program.uniformOffset, Offset[0], Offset[0]); //passes the values of offset to the program
+	gl.uniform1f(program.uniformScale, uScale); //uniform1f means that its only a one argument parameter.
 	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
 
 	</script>
