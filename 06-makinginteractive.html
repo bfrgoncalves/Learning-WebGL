@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<canvas id = 'c' width = '900' height = '900'></canvas>
+	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
+	<script id = 'vshader' type = 'x-shader'>
+		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
+
+		void main(){
+			gl_Position = vec4(aVertexPosition, 0, 1);
+		}
+	</script>
+	<script id = 'fshader' type = 'x-shader'>
+	#ifdef GL_FRAGMENT_PRECISION_HIGH //check if the device supports high precision floats
+		precision highp float;
+	#else
+		precision mediump float;
+	#endif
+		precision mediump int;
+		uniform vec2 uCanvasSize;
+		uniform vec2 uOffset;
+		uniform float uScale;
+
+		vec4 calc(vec2 texCoord){ //Function to calculate the color of every pixel of the fragment
+			//Color based on iteration
+			//Mandelbrot set
+			float x = 0.0;
+			float y = 0.0;
+			float v = 10000.0; //To add more color to the fractile
+			float j = 10000.0;
+
+			for (int iteration = 0; iteration <100; ++iteration){
+				float xtemp = x*x-y*y+texCoord.x;
+				y = 2.0*x*y+texCoord.y;
+				x = xtemp;
+				v = min(v, abs(x*x+y*y));
+				j = min(j, abs(x*y));
+				if (x*x+y*y >= 8.0) {
+					float d = float(iteration) / 20.0;
+					return vec4(d+j, d, d+v,1); //Returns the color based on iteration
+				}
+			}
+			return vec4(0, 0, 0, 1); //returns black
+		}
+		void main(){
+			//gl_FragCoord gives the pixel position of the current fragment
+			//scale the texCoord by the canvasSize
+			vec2 texCoord = (gl_FragCoord.xy / uCanvasSize.xy) * 2.0 - vec2 (1.0,1.0);
+			texCoord = texCoord * uScale + uOffset;
+			gl_FragColor = calc(texCoord);
+		}
+	</script>
+	<script>
+
+	var c = document.getElementById('c');
+	var gl = c.getContext('experimental-webgl');
+	var Offset = [-0.5, 0]; //defines the offset and the scale to visualize all the fractile
+	var uScale = 1.35;
+	var iv = null; //intervals are needed to keep drawing if we keep the key down
+	var actions = {} //set the actions which are being used
+	var keyMappings = { '37' : 'panleft', '38' : 'panup', '39' : 'panright' , '40' : 'pandown',
+						'90' : 'zoomin', '88' : 'zoomout'}; 
+					//mapping keys to actions
+
+	for (var k in keyMappings) {
+		actions[keyMapping[k]] = false;
+	}
+
+
+	//To create some geometry we need some BUFFER to hold some VERTEX data
+	var vertexPosBuffer = screenQuad();
+
+	//Define VERTEX SHADER and FRAGMENT SHADER
+	vs = document.getElementById('vshader').textContent;
+	fs = document.getElementById('fshader').textContent;
+
+	console.log(fs);
+
+	var program = createProgram(vs,fs);
+	console.log(program);
+	gl.useProgram(program);
+	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
+	program.canasSizeUniform = gl.getUniformLocation(program,'uCanvasSize'); //get the position of the uniform
+	program.uniformOffset = gl.getUniformLocation(program,'uOffset'); //gets the locations of the uniforms at the program
+	program.uniformScale = gl.getUniformLocation(program,'uScale');
+	gl.enableVertexAttribArray(program.vertexPosArray);
+	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+
+
+	window.onkeydown = function(e) { //on key down, if we have that key on the actions
+		var kc = e.keyCode.toString();
+		if (keyMappings.hasOwnProperty(kc)) {
+			actions[keyMappings[kc]] = true;
+			if (!iv) {
+				iv = setInterval('draw();', 16); //we set an interval to keep drawing every 16 miliseconds
+			}
+		}
+	}
+
+	window.onkeyup = function(e) { //on key up, if we have that key on actions
+		var kc = e.keyCode.toString();
+		if (keyMappings.hasOwnProperty(kc)) {
+			actions[keyMappings[kc]] = false; // we cancel that action
+		}
+		for (var j in keyMappings){
+			if (actions[keyMappings[j]]){ //if we have some action going on we kepp the interval
+				return;
+			}
+		}
+		clearInterval(iv); //else we clear it
+		iv = null;
+	}
+
+	function draw(){ //MAKING it callable multiple times
+		offset[0] += -(actions.panleft ? scale / 25 : 0) + (actions.panright ? scale / 25 : 0); //changes the offset by the scale
+		offset[0] += -(actions.pandown ? scale / 25 : 0) + (actions.panup ? scale / 25 : 0);
+		scale = scale * (actions.zoomin ? 0.975 : 1.0) / (actions.zoomout ? 0.975 : 1.0); //changes the scale
+		gl.uniform2f(program.canasSizeUniform, c.width, c.height); //passing the values to the location of the uniform inside the program
+		gl.uniform2f(program.uniformOffset, Offset[0], Offset[0]); //passes the values of offset to the program
+		gl.uniform1f(program.uniformScale, uScale); //uniform1f means that its only a one argument parameter.
+		gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
+	}
+
+	draw();
+	</script>
+
+
+</html>
