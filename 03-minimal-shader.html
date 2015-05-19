@@ -13,7 +13,7 @@
 	</script>
 	<script id = 'fshader' type = 'x-shader'>
 		precision mediump float;
-		varying vec2 vTextCoord;
+		varying vec2 vTextCoord; //get the passing value from the vertex shader
 		void main(){
 			gl_FragColor = vec4(vTexCoord, 0, 1);
 		}
@@ -42,6 +42,8 @@
 	//Define VERTEX SHADER and FRAGMENT SHADER
 	vs = document.getElementById('vshader').textContent;
 	fs = document.getElementById('fshader').textContent;
+
+	console.log(fs);
 
 	var program = createProgram(vs,fs);
 	console.log(program);
