@@ -19,7 +19,17 @@
 		uniform vec2 uCanvasSize;
 
 		vec4 calc(vec2 texCoord){ //Function to calculate the color of every pixel of the fragment
-			return vec4(texCoord, 0, 1);
+			float x = 0.0;
+			float y = 0.0;
+			for (int iteration = 0; iteration <100; ++iteration){
+				float xtemp = x*x-y*y+texCoord.x;
+				y = 2.0*x*y+texCoord.y;
+				x = xtemp;
+				if (x*x+y*y >= 8.0) {
+					return vec4(d, d, d,1);
+				}
+			}
+			return vec4(0, 0, 0, 1);
 		}
 		void main(){
 			//gl_FragCoord gives the pixel position of the current fragment
