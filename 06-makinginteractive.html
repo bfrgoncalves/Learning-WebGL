@@ -87,6 +87,7 @@
 
 
 	window.onkeydown = function(e) { //on key down, if we have that key on the actions
+		console.log(e.keyCode.toString());
 		var kc = e.keyCode.toString();
 		if (keyMappings.hasOwnProperty(kc)) {
 			actions[keyMappings[kc]] = true;
