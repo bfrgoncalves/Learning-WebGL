@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html>
-	<canvas id = 'c' width = '400' height = '400'></canvas>
+	<canvas id = 'c' width = '900' height = '900'></canvas>
 	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
 	<script id = 'vshader' type = 'x-shader'>
 		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
-		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
-		uniform vec2 uOffset; //Just a constant passed in
+
 		void main(){
-			vTexCoord = aVertexPosition + uOffset;
 			gl_Position = vec4(aVertexPosition, 0, 1);
 		}
 	</script>
 	<script id = 'fshader' type = 'x-shader'>
+	#ifdef GL_FRAGMENT_PRECISION_HIGH //check if the device supports high precision floats
+		precision highp float;
+	#else
 		precision mediump float;
-		varying vec2 vTexCoord; //get the passing value from the vertex shader
+	#endif
+		precision mediump int;
+		uniform vec2 uCanvasSize;
+
+		vec4 calc(vec2 texCoord){ //Function to calculate the color of every pixel of the fragment
+			return vec4(texCoord, 0, 1);
+		}
 		void main(){
-			gl_FragColor = vec4(vTexCoord, 0, 1);
+			//gl_FragCoord gives the pixel position of the current fragment
+			//scale the texCoord by the canvasSize
+			vec2 texCoord = (gl_FragCoord.xy / uCanvasSize.xy) * 2.0 - vec2 (1.0,1.0);
+			gl_FragColor = calc(texCoord);
 		}
 	</script>
 	<script>
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
-	var offset = [1, 1]; //it will add one to the texture coordenates. They will range from 0 to 2 instead
 
 	//To create some geometry we need some BUFFER to hold some VERTEX data
-	var vertexPosBuffer = screenQuad(); //the creation of the buffer is at webglutils now
+	var vertexPosBuffer = screenQuad();
 
 	//Define VERTEX SHADER and FRAGMENT SHADER
 	vs = document.getElementById('vshader').textContent;
@@ -37,10 +46,10 @@
 	console.log(program);
 	gl.useProgram(program);
 	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
-	program.offsetUniform = gl.getUniformLocation(program,'uOffset'); //get the position of the uniform
+	program.canasSizeUniform = gl.getUniformLocation(program,'uCanvasSize'); //get the position of the uniform
 	gl.enableVertexAttribArray(program.vertexPosArray);
 	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
-	gl.uniform2f(program.offsetUniform, offset[0], offset[1]); //passing the values to the location of the uniform inside the program
+	gl.uniform2f(program.canasSizeUniform, c.width, c.height); //passing the values to the location of the uniform inside the program
 	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
 
 	</script>
