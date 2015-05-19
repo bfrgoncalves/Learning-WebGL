@@ -111,8 +111,8 @@
 	}
 
 	function draw(){ //MAKING it callable multiple times
-		Offset[0] += -(actions.panleft ? scale / 25 : 0) + (actions.panright ? uScale / 25 : 0); //changes the offset by the scale
-		Offset[1] += -(actions.pandown ? scale / 25 : 0) + (actions.panup ? uScale / 25 : 0);
+		Offset[0] += -(actions.panleft ? uScale / 25 : 0) + (actions.panright ? uScale / 25 : 0); //changes the offset by the scale
+		Offset[1] += -(actions.pandown ? uScale / 25 : 0) + (actions.panup ? uScale / 25 : 0);
 		uScale = uScale * (actions.zoomin ? 0.975 : 1.0) / (actions.zoomout ? 0.975 : 1.0); //changes the scale
 		gl.uniform2f(program.canasSizeUniform, c.width, c.height); //passing the values to the location of the uniform inside the program
 		gl.uniform2f(program.uniformOffset, Offset[0], Offset[0]); //passes the values of offset to the program
