@@ -31,7 +31,7 @@
 				y = 2.0*x*y+texCoord.y;
 				x = xtemp;
 				v = min(v, abs(x*x+y*y));
-				j = min(j, x*y);
+				j = min(j, abs(x*y));
 				if (x*x+y*y >= 8.0) {
 					float d = float(iteration) - (log(log(sqrt(x*x+y*y)) / log(2.0))) / 50.0;
 					return vec4(d + v, d, d + j,1); //Returns the color based on iteration
