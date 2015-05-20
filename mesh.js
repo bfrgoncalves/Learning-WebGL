@@ -41,7 +41,7 @@ function Mesh(){
 			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 			gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexPosBuffer);
 			gl.vertexAttribPointer(program.vertexPositionAttribute, 3, gl.FLOAT, false, 0 ,0);
-			gl.drawElements(gl.TRIANGLES, program.numindices, gl.UNSIGNED_SHORT, start * 2);
+			gl.drawElements(gl.POINTS, program.numindices, gl.UNSIGNED_SHORT, start * 2);
 			start += program.numindices;
 		}
 	};
