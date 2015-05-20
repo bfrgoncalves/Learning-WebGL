@@ -9,7 +9,7 @@ function Mesh(){
 
 	this.init = function(jsonstring){
 		var mesh = JSON.parse(jsonstring);
-		this.vertextPosBuffer = gl.createBuffer();
+		this.vertexPosBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexPosBuffer);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(mesh.vertexPositions), gl.STATIC_DRAW);
 		this.indexBuffer = gl.createBuffer();
