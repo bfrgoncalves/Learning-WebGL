@@ -61,6 +61,7 @@
 	program.numberOfParts = gl.getUniformLocation(program,'anumberOfParts');
 	gl.enableVertexAttribArray(program.vertexPosArray);
 	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+	console.log(vertexPosBuffer.numberOfParts);
 	gl.uniform1f(program.numberOfParts, vertexPosBuffer.numberOfParts);
 	//gl.uniform2f(program.offsetUniform, offset[0], offset[1]); //passing the values to the location of the uniform inside the program
 	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
