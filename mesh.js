@@ -14,7 +14,7 @@ function Mesh(){
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(mesh.vertexPositions), gl.STATIC_DRAW);
 		this.indexBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint6Array(mesh.indices), gl.STATIC_DRAW);
+		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(mesh.indices), gl.STATIC_DRAW);
 
 		this.materialsToLoad = mesh.materials.length;
 		this.programs =[];
