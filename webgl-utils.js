@@ -91,7 +91,7 @@ function loadProgram(vs, fs, callback){ //creates a program by loading the files
 		}
 	}
 	function fshaderLoaded(str){
-		program.vshaderSource = str;
+		program.fshaderSource = str;
 		if(program.vshaderSource) {
 			linkProgram(program);
 			callback(program);
