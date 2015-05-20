@@ -62,10 +62,13 @@ function linkProgram(program) { //get shaders, attach shaders to the program and
 	}
 }
 
-function loadFile(file, callback, noChache){ // Useful for get files
+function loadFile(file, callback, noChache, isJson){ // Useful for get files
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){
 		if(request.readyState ==1){ //only when the ready state is 1 we can send the request
+			if(Json) {
+				request.overrideMimeType('application/json'); //saying that the request is in json format
+			}
 			request.send();
 		} else if (request.readyState == 4) { //if its 4 we can get the response
 			if (request.status == 200) {
@@ -101,5 +104,7 @@ function loadProgram(vs, fs, callback){ //creates a program by loading the files
 	}
 	loadFile(vs, vshaderLoaded, true); //true means no Cache
 	loadFile(fs, fshaderLoaded, true);
+
+	return program;
 
 }
