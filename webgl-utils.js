@@ -76,7 +76,7 @@ function loadFile(file, callback, noChache){ // Useful for get files
 	};
 	var url = file;
 	if (noChache) {
-		url += '?' (new Date()).getTime();
+		url += '?' + (new Date()).getTime();
 	}
 	request.open('GET', file, true); //open the get request
 }
