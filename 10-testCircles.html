@@ -16,7 +16,7 @@
 		uniform float unumberOfParts;
 		void main(){
 			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 0.25){
-				if (unumberOfParts == 2.0){
+				if (unumberOfParts == 2){
 					if (vTexCoord.y <= 0.0){
 						gl_FragColor = vec4(1, 0, 0, 1);
 					}
