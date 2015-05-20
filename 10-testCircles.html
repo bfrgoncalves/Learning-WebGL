@@ -5,7 +5,6 @@
 	<script id = 'vshader' type = 'x-shader'>
 		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
 		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
-		uniform vec2 uOffset; //Just a constant passed in
 		void main(){
 			vTexCoord = aVertexPosition + uOffset;
 			gl_Position = vec4(aVertexPosition, 0, 1);
@@ -16,7 +15,12 @@
 		varying vec2 vTexCoord; //get the passing value from the vertex shader
 		void main(){
 			if ((vTexCoord.x - 0.5) * (vTexCoord.x - 0.5) + (vTexCoord.y - 0.5) * (vTexCoord.y - 0.5) < 0.25){
-				gl_FragColor = vec4(vTexCoord, 0, 1);
+				if (vTexCoord.y <= 0){
+					gl_FragColor = vec4(1, 0, 0, 1);
+				}
+				else{
+					gl_FragColor = vec4(0, 0, 1, 1);
+				}
 			}
 		}
 	</script>
@@ -24,7 +28,6 @@
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
-	var offset = [1, 1]; //it will add one to the texture coordenates. They will range from 0 to 2 instead
 
 	//To create some geometry we need some BUFFER to hold some VERTEX data
 	var vertexPosBuffer = gl.createBuffer();
@@ -44,11 +47,11 @@
 	//Define VERTEX SHADER and FRAGMENT SHADER
 	vs = document.getElementById('vshader').textContent;
 	fs = document.getElementById('fshader').textContent;
+	var numberOfParts = 2;
 
 	var program = createProgram(vs,fs);
 	gl.useProgram(program);
 	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
-	program.offsetUniform = gl.getUniformLocation(program,'uOffset'); //get the position of the uniform
 	gl.enableVertexAttribArray(program.vertexPosArray);
 	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
 	gl.uniform2f(program.offsetUniform, offset[0], offset[1]); //passing the values to the location of the uniform inside the program
