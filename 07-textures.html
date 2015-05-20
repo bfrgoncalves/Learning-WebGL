@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<canvas id = 'c' width = '400' height = '400'></canvas>
+	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
+	<script id = 'vshader' type = 'x-shader'>
+		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
+		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
+		void main(){
+			vTexCoord = aVertexPosition;
+			gl_Position = vec4(aVertexPosition, 0, 1);
+		}
+	</script>
+	<script id = 'fshader' type = 'x-shader'>
+		precision mediump float;
+		varying vec2 vTexCoord; //get the passing value from the vertex shader
+		uniform sampler2D uSampler;
+		void main(){
+			gl_FragColor = texture2D(uSampler, vTexCoord);
+		}
+	</script>
+	<script>
+
+	var c = document.getElementById('c');
+	var gl = c.getContext('experimental-webgl');
+	var offset = [1, 1]; //it will add one to the texture coordenates. They will range from 0 to 2 instead
+
+	//To create some geometry we need some BUFFER to hold some VERTEX data
+	var vertexPosBuffer = screenQuad(); //the creation of the buffer is at webglutils now
+
+	//Define VERTEX SHADER and FRAGMENT SHADER
+	vs = document.getElementById('vshader').textContent;
+	fs = document.getElementById('fshader').textContent;
+
+	console.log(fs);
+
+	var program = createProgram(vs,fs);
+	console.log(program);
+	gl.useProgram(program);
+	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
+	program.offsetUniform = gl.getUniformLocation(program,'uOffset'); //get the position of the uniform
+	program.samplerUniform = gl.getUniformLocation(program,'uSampler'); //get the position of the texture sampler uniform
+	gl.enableVertexAttribArray(program.vertexPosArray);
+	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+	var texture = gl.createTexture();
+	var img = new Image();
+	img.onload = function(){
+		gl.activeTexture(gl.TEXTURE0);
+		gl.bindTexture(gl.TEXTURE_2D, texture);
+		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+		gl.texImage2D(gl.TEXTURE_2D, 0 , gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+		gl.uniform1i(program.samplerIUniform, 0); //passing the uniform value of texture unit 0;
+		gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
+	}
+
+	img.src = 'textures/example.jpg';
+	
+
+	</script>
+
+
+</html>
