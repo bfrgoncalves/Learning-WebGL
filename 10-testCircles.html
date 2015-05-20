@@ -6,7 +6,7 @@
 		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
 		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
 		void main(){
-			vTexCoord = aVertexPosition + uOffset;
+			vTexCoord = aVertexPosition;
 			gl_Position = vec4(aVertexPosition, 0, 1);
 		}
 	</script>
