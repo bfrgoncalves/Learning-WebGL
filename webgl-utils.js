@@ -66,7 +66,7 @@ function loadFile(file, callback, noChache, isJson){ // Useful for get files
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){
 		if(request.readyState ==1){ //only when the ready state is 1 we can send the request
-			if(Json) {
+			if(isJson) {
 				request.overrideMimeType('application/json'); //saying that the request is in json format
 			}
 			request.send();
