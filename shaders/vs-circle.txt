@@ -1,0 +1,8 @@
+// Pack clor and size into vector. First elemnt is color, second - size.
+// Since it's floating point we can only use 24 bit to pack colors...
+// thus alpha channel is dropped, and is always assumed to be 1.
+
+attribute vec3 aVertexPosition;
+void main(void) {
+	gl_Position = vec4(aVertexPosition, 0, 1);
+}

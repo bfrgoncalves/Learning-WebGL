@@ -1,1 +1,32 @@
-10-testCircles.html
+<!DOCTYPE html>
+<html>
+<canvas id= 'c' width='900' height = '900'></canvas>
+<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
+	
+<script>
+
+	var c = document.getElementById('c');
+	var gl = c.getContext('experimental-webgl');
+	var offset = [1, 1]; //it will add one to the texture coordenates. They will range from 0 to 2 instead
+
+	//To create some geometry we need some BUFFER to hold some VERTEX data
+	var vertexPosBuffer = screenQuad(); //the creation of the buffer is at webglutils now
+
+	//Define VERTEX SHADER and FRAGMENT SHADER
+
+	function initProgram(program) { //Callled when the program as been loads and shaders
+
+		gl.useProgram(program);
+		program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
+		gl.enableVertexAttribArray(program.vertexPosArray);
+		gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+		gl.uniform2f(program.offsetUniform, offset[0], offset[1]); //passing the values to the location of the uniform inside the program
+		gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
+	}
+
+	loadProgram('shaders/vs-circle.txt', 'shaders/fs-circle.txt', initProgram); //will load the program and the shaders using http requests and then initialize the program.
+																				  //function at webglUtils
+</script>
+
+
+</html>
