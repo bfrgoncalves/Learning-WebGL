@@ -13,13 +13,16 @@
 	<script id = 'fshader' type = 'x-shader'>
 		precision mediump float;
 		varying vec2 vTexCoord; //get the passing value from the vertex shader
+		uniform float unumberOfParts;
 		void main(){
 			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 0.25){
-				if (vTexCoord.y <= 0.0){
-					gl_FragColor = vec4(1, 0, 0, 1);
-				}
-				else{
-					gl_FragColor = vec4(0, 0, 1, 1);
+				if (unumberOfParts == 2.0){
+					if (vTexCoord.y <= 0.0){
+						gl_FragColor = vec4(1, 0, 0, 1);
+					}
+					else{
+						gl_FragColor = vec4(0, 0, 1, 1);
+					}
 				}
 			}
 		}
@@ -37,6 +40,7 @@
 																				//once and draw it several times
 	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
 	vertexPosBuffer.numItems = 4;
+	vertexPosBuffer.numberOfParts = 2;
 	/*
 	 2___ 3 
 	 |\  |		//Square is defined in this case as a triangle strip, two triangles combined
@@ -47,13 +51,14 @@
 	//Define VERTEX SHADER and FRAGMENT SHADER
 	vs = document.getElementById('vshader').textContent;
 	fs = document.getElementById('fshader').textContent;
-	var numberOfParts = 2;
 
 	var program = createProgram(vs,fs);
 	gl.useProgram(program);
 	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
+	program.numberOfParts = gl.getAttribLocation(program,'anumberOfParts');
 	gl.enableVertexAttribArray(program.vertexPosArray);
 	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+	gl.uniform1f(program.numberOfParts, vertexPosBuffer.numberOfParts);
 	//gl.uniform2f(program.offsetUniform, offset[0], offset[1]); //passing the values to the location of the uniform inside the program
 	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
 
