@@ -1,0 +1,6 @@
+precision mediump float;
+varying vec2 vTexCoord; //get the passing value from the vertex shader
+
+void main(){
+	gl_FragColor = vec4(vTexCoord, 0, 1);
+}

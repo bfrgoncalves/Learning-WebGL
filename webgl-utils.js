@@ -48,3 +48,56 @@ function screenQuad(){ //Creates a buffer on the context and append the data to 
 	return vertexPosBuffer;
 
 }
+
+function linkProgram(program) { //get shaders, attach shaders to the program and link them
+	var vshader = createShader(program.vshaderSource, gl.VERTEX_SHADER);
+	var fshader = createShader(program.fshaderSource, gl.FRAGMENT_SHADER);
+	gl.attachShader(program, vshader);
+	gl.attachShader(program, fshader);
+	gl.linkProgram(program);
+	if(!gl.getProgramParameter(program, gl.LINK_STATUS)) { //CHECK the link status of the program, by checking for the parameter gl.LINK_STATUS
+			throw gl.getProgramInfoLog(program);
+	}
+}
+
+function loadFile(file, callback, noChache){ // Useful for get files
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function(){
+		if(request.readyState ==1){ //only when the ready state is 1 we can send the request
+			request.send();
+		} else if (request.readyState == 4) { //if its 4 we can get the response
+			if (request.status == 200) {
+				callback(request.responseText); //response text is the file content
+			} else if (request.status == 404){  //check for errors
+				throw 'File "' + file + '" does not exist';
+			} else {
+				throw 'XHR error ' + request.status + '.';			}
+		}
+	};
+	var url = file;
+	if (noChache) {
+		url += '?' (new Date()).getTime();
+	}
+	request.open('GET', file, true); //open the get request
+}
+
+function loadProgram(vs, fs, callback){ //creates a program by loading the files using get requests 
+	var program = gl.createProgram();
+	function vshaderLoaded(str){
+		program.vshaderSource = str;
+		if(program.fshaderSource) {
+			linkProgram(program);
+			callback(program);
+		}
+	}
+	function fshaderLoaded(str){
+		program.vshaderSource = str;
+		if(program.vshaderSource) {
+			linkProgram(program);
+			callback(program);
+		}
+	}
+	loadFile(vs, vshaderLoaded, true); //true means no Cache
+	loadFile(fs, fshaderLoaded, true);
+
+}

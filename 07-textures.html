@@ -22,7 +22,6 @@
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
-	var offset = [1, 1]; //it will add one to the texture coordenates. They will range from 0 to 2 instead
 
 	//To create some geometry we need some BUFFER to hold some VERTEX data
 	var vertexPosBuffer = screenQuad(); //the creation of the buffer is at webglutils now
@@ -31,10 +30,7 @@
 	vs = document.getElementById('vshader').textContent;
 	fs = document.getElementById('fshader').textContent;
 
-	console.log(fs);
-
 	var program = createProgram(vs,fs);
-	console.log(program);
 	gl.useProgram(program);
 	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
 	program.offsetUniform = gl.getUniformLocation(program,'uOffset'); //get the position of the uniform
@@ -48,8 +44,8 @@
 		gl.bindTexture(gl.TEXTURE_2D, texture);
 		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-		// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-		// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 		gl.uniform1i(program.samplerIUniform, 0); //passing the uniform value of texture unit 0;
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
 	}
