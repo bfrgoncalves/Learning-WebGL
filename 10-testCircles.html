@@ -55,7 +55,7 @@
 	var program = createProgram(vs,fs);
 	gl.useProgram(program);
 	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
-	program.numberOfParts = gl.getAttribLocation(program,'anumberOfParts');
+	program.numberOfParts = gl.getUniformLocation(program,'anumberOfParts');
 	gl.enableVertexAttribArray(program.vertexPosArray);
 	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
 	gl.uniform1f(program.numberOfParts, vertexPosBuffer.numberOfParts);
