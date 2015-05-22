@@ -17,10 +17,10 @@
 		void main(){
 			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 				//gl_FragColor = vec4(1, 0, 0, 1);
-					 if (vTexCoord.y <= 0.1){
-					 	if (vTexCoord.x <= 0.0){
+					 if (vTexCoord.y <= 0.1 && vTexCoord.x < 0.1){
+					 	
 					 		gl_FragColor = vec4(1, 0, 0, 1);
-					 	}
+					 	
 					 }
 					// 	else{
 					// 		gl_FragColor = vec4(1, 1, 0, 1);
