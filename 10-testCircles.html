@@ -14,8 +14,8 @@
 		precision mediump float;
 		varying vec2 vTexCoord; //get the passing value from the vertex shader
 		uniform int unumberOfParts;
-		float angle = 45.0;
 		void main(){
+			float angle = 45.0;
 			float rad = radians(angle);
 			if (sin(rad) <= (vTexCoord.y - 0.5) / (vTexCoord.x - 0.5)){
 			
