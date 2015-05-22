@@ -17,7 +17,7 @@
 		void main(){
 			float angle = 45.0;
 			float rad = radians(angle);
-			if (sin(rad) <= (vTexCoord.y - 0.5) / (vTexCoord.x - 0.5)){
+			if (sin(rad) <= (vTexCoord.y - 1.0) / (vTexCoord.x - 1.0)){
 			
 				if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 					//gl_FragColor = vec4(1, 0, 0, 1);
