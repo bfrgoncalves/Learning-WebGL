@@ -15,7 +15,7 @@
 		varying vec2 vTexCoord; //get the passing value from the vertex shader
 		uniform int unumberOfParts;
 		void main(){
-			if (vTexCoord.y <= 0.1 && vTexCoord.x < 0.1){
+			if (vTexCoord.y <= 0.5 && vTexCoord.x > 0.0){
 				if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 					//gl_FragColor = vec4(1, 0, 0, 1);
 						 	
