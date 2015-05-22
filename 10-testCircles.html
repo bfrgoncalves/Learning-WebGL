@@ -36,10 +36,10 @@
 					}
 				}
 				else if (vTexCoord.y <= 0.0 && vTexCoord.x >= 0.0){
-					if (totalAngles - 90.0 > 0.0){
+					if (totalAngles - 90.0 >= 0.0){
 						rad = radians(totalAngles - 90.0);
 						float less = radians(90.0);
-						if (tan(rad + prevAngle - less) >= abs((vTexCoord.y) / (vTexCoord.x)) && tan(prevAngle - less) <= abs((vTexCoord.y) / (vTexCoord.x))){
+						if (tan(rad) >= abs((vTexCoord.y) / (vTexCoord.x)) && tan(prevAngle) <= abs((vTexCoord.y) / (vTexCoord.x))){
 							float color = float(i) * 0.3;
 							if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 								//gl_FragColor = vec4(1, 0, 0, 1);
