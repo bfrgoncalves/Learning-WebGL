@@ -17,6 +17,7 @@
 		void main(){
 			vec3 angles = vec3(20.0, 20.0, 30.0);
 			float prevAngle = radians(0.0);
+			bool found = false;
 			for (int i = 0; i < 3; i++){
 				float rad = radians(angles[i]);
 				float rest = radians(360.0) - (prevAngle);
@@ -26,11 +27,16 @@
 						//gl_FragColor = vec4(1, 0, 0, 1);
 							 	
 							 		gl_FragColor = vec4(color, 0, 0, 1);
+							 		found = true;
 
 					}	
 				}
 				prevAngle = prevAngle + rad;
 			}
+			if (found == false){
+				gl_FragColor = vec4(0, 0, 1, 1);
+			}
+
 					// 	else{
 					// 		gl_FragColor = vec4(1, 1, 0, 1);
 					// 	}
