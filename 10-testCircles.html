@@ -15,16 +15,16 @@
 		varying vec2 vTexCoord; //get the passing value from the vertex shader
 		uniform int unumberOfParts;
 		void main(){
-			float angles = 10.0;
-			//float prevAngle = radians(0.0);
-			//for (int i = 0; i < 3; i++){
-				float rad = radians(angles);
-				if (sin(rad) >= (vTexCoord.y) / (vTexCoord.x) && sin(radians(360) - rad) >= (vTexCoord.y) / (vTexCoord.x)){
-					//float color = float(i) * 0.3;
+			float angles = vec3(10.0, 20.0, 30.0);
+			float prevAngle = radians(0.0);
+			for (int i = 0; i < 3; i++){
+				float rad = radians(angles[i]);
+				if (sin(rad + prevAngle) >= (vTexCoord.y) / (vTexCoord.x) && sin(radians(360) - (rad + prevAngle)) >= (vTexCoord.y) / (vTexCoord.x)){
+					float color = float(i) * 0.3;
 					if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 						//gl_FragColor = vec4(1, 0, 0, 1);
 							 	
-							 		gl_FragColor = vec4(1, 0, 0, 1);
+							 		gl_FragColor = vec4(color, 0, 0, 1);
 
 					}	
 				}
