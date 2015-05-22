@@ -17,20 +17,34 @@
 		void main(){
 			vec3 angles = vec3(20.0, 20.0, 50.0);
 			float prevAngle = radians(0.0);
+			float totalAngles = 0.0;
 			bool found = false;
 			for (int i = 0; i < 3; i++){
 				float rad = radians(angles[i]);
+				totalAngles = totalAngles + angles[i];
 				//float rest = radians(360.0) - (prevAngle);
-				if ((tan(rad + prevAngle) >= (vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngle) <= (vTexCoord.y) / (vTexCoord.x)) && vTexCoord.y <= 0.0 && vTexCoord.x <= 0.0){
-					float color = float(i) * 0.3;
-					if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
-						//gl_FragColor = vec4(1, 0, 0, 1);
-							 	
-							 		gl_FragColor = vec4(color, 0, 0, 1);
-							 		found = true;
+				if (vTexCoord.y <= 0.0 && vTexCoord.x <= 0.0){
+					if ((tan(rad + prevAngle) >= (vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngle) <= (vTexCoord.y) / (vTexCoord.x))){
+						float color = float(i) * 0.3;
+						if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
+							//gl_FragColor = vec4(1, 0, 0, 1);
+								 	
+								 		gl_FragColor = vec4(color, 0, 0, 1);
+								 		found = true;
 
-					}	
+						}	
+					}
 				}
+				else if (vTexCoord.y <= 0.0 && vTexCoord.x >= 0.0){
+					if (totalAngles - 90.0 > 0.0){
+						rad = radians(totalAngles - 90.0);
+						float less = radians(90.0);
+						if ((tan(rad + prevAngle - less) >= abs((vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngle - less) <= abs((vTexCoord.y) / (vTexCoord.x))){
+
+						}
+					}
+				}
+
 				prevAngle = prevAngle + rad;
 			}
 			if (found == false){
