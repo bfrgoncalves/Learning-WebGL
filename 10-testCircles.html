@@ -15,12 +15,12 @@
 		varying vec2 vTexCoord; //get the passing value from the vertex shader
 		uniform int unumberOfParts;
 		void main(){
-			vec3 angles = vec3(20.0, 20.0, 60.0);
+			vec3 angles = vec3(20.0, 20.0, 50.0);
 			float prevAngle = radians(0.0);
 			bool found = false;
 			for (int i = 0; i < 3; i++){
 				float rad = radians(angles[i]);
-				float rest = radians(360.0) - (prevAngle);
+				//float rest = radians(360.0) - (prevAngle);
 				if (tan(rad + prevAngle) >= (vTexCoord.y) / (vTexCoord.x) && tan(prevAngle) <= (vTexCoord.y) / (vTexCoord.x)){
 					float color = float(i) * 0.3;
 					if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
