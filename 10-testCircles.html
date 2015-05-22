@@ -19,7 +19,8 @@
 			float prevAngle = radians(0.0);
 			for (int i = 0; i < 3; i++){
 				float rad = radians(angles[i]);
-				if (sin(rad + prevAngle) >= (vTexCoord.y) / (vTexCoord.x) && sin(radians(360.0) - (rad + prevAngle)) >= (vTexCoord.y) / (vTexCoord.x)){
+				float rest = radians(360.0) - (rad + prevAngle);
+				if (sin(rad + prevAngle) >= (vTexCoord.y) / (vTexCoord.x) && sin(rest) >= (vTexCoord.y) / (vTexCoord.x)){
 					float color = float(i) * 0.3;
 					if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 						//gl_FragColor = vec4(1, 0, 0, 1);
