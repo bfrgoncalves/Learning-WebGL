@@ -15,7 +15,7 @@
 		varying vec2 vTexCoord; //get the passing value from the vertex shader
 		uniform int unumberOfParts;
 		void main(){
-			float angles = [45.0, 30.0, 20.0];
+			float angles = {45.0, 30.0, 20.0};
 			for (i = 0; i < 3; i++){
 				float rad = radians(angles[i]);
 				if (sin(rad) >= (vTexCoord.y) / (vTexCoord.x)){
