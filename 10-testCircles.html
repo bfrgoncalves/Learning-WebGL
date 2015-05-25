@@ -136,17 +136,12 @@
 			 			if (totalAngles - angles[i] < 270.0){
 			 				AngleToUse = totalAngles - 270.0;
 			 			}
-			 			else if (totalAngles > 270.0){
-							rest = totalAngles - 270.0;
-							AngleToUse = angles[i] - rest;
-							hasRest = true;
-						}
 			 			else{
 			 				AngleToUse = angles[i];
 			 			}
 
 			 			rad = radians(AngleToUse);
-			 		 	 if ((tan((rad + prevAngle)) <= -(vTexCoord.x) / (vTexCoord.y)) && (tan((prevAngle)) >= -(vTexCoord.x) / (vTexCoord.y))){
+			 		 	 if ((tan((rad + prevAngle)) >= -(vTexCoord.x) / (vTexCoord.y)) && (tan((prevAngle)) <= -(vTexCoord.x) / (vTexCoord.y))){
 			 		 	 	float color = float(i) * 0.3;
 			 		 	 	if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 			 		 	 		//gl_FragColor = vec4(1, 0, 0, 1);
