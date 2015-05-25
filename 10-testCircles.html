@@ -31,43 +31,47 @@
 
 			for (int i = 0; i < 3; i++){
 
-				if (totalAnglesNN < 90.0) {
+
+				if (vTexCoord.y < 0.0 && vTexCoord.x < 0.0){
 					totalAnglesNN = totalAnglesNN + angles[i];
-				}
-
-				rad = radians(angles[i]);
-				if ((tan(rad + prevAngleNN) >= (vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngleNN) <= (vTexCoord.y) / (vTexCoord.x)) && vTexCoord.y < 0.0){
-					float color = float(i) * 0.3;
-					if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
-						//gl_FragColor = vec4(1, 0, 0, 1);
-							 	
-							 		gl_FragColor = vec4(color, 0, 0, 1);
-							 		found = true;
-
-					}	
-				}
-				prevAngleNN = prevAngleNN + rad;
-
-				if (totalAnglesPN == 0.0){
-					totalAnglesPN = totalAnglesNN - 90.0;
-					rad = radians(totalAnglesPN);
-				}
-				else{
-					totalAnglesPN = totalAnglesPN + angles[i];
 					rad = radians(angles[i]);
+					if ((tan(rad + prevAngleNN) >= (vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngleNN) <= (vTexCoord.y) / (vTexCoord.x)) && vTexCoord.y < 0.0){
+						float color = float(i) * 0.3;
+						if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
+							//gl_FragColor = vec4(1, 0, 0, 1);
+								 	
+								 		gl_FragColor = vec4(color, 0, 0, 1);
+								 		found = true;
+
+						}	
+					}
+					prevAngleNN = prevAngleNN + rad;
+
+
+
+
 				}
 
-				if ((tan(radQuad - (rad + prevAnglePN)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(radQuad - (prevAnglePN)) >= (vTexCoord.y) / -(vTexCoord.x)) && vTexCoord.x > 0.0){
-					float color = float(i) * 0.3;
-					if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
-						//gl_FragColor = vec4(1, 0, 0, 1);
+				// if (totalAnglesPN == 0.0){
+				// 	totalAnglesPN = totalAnglesNN - 90.0;
+				// 	rad = radians(totalAnglesPN);
+				// }
+				// else{
+				// 	totalAnglesPN = totalAnglesPN + angles[i];
+				// 	rad = radians(angles[i]);
+				// }
+
+				// if ((tan(radQuad - (rad + prevAnglePN)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(radQuad - (prevAnglePN)) >= (vTexCoord.y) / -(vTexCoord.x)) && vTexCoord.x > 0.0){
+				// 	float color = float(i) * 0.3;
+				// 	if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
+				// 		//gl_FragColor = vec4(1, 0, 0, 1);
 							 	
-							 		gl_FragColor = vec4(color, 0, 0, 1);
-							 		found = true;
+				// 			 		gl_FragColor = vec4(color, 0, 0, 1);
+				// 			 		found = true;
 
-					}	
-				}
-				prevAnglePN = prevAnglePN + rad;
+				// 	}	
+				// }
+				// prevAnglePN = prevAnglePN + rad;
 				
 			}
 			if (found == false){
