@@ -26,20 +26,17 @@
 			float rad = 0.0;
 			float AngleToUse = 0.0;
 			float rest;
-			int countAngles = 0;
-
 
 			if (vTexCoord.y < 0.0 && vTexCoord.x < 0.0){
 				for (int i = 0; i<3;i++){
-					countAngles = countAngles + 1;
-					totalAngles = totalAngles + angles[countAngles];
+					totalAngles = totalAngles + angles[i];
 					if (totalAngles > 90.0){
 						rest = totalAngles - 90.0;
-						AngleToUse = angles[countAngles] - rest;
+						AngleToUse = angles[i] - rest;
 						hasRest = true;
 					}
 					else{
-						AngleToUse = angles[countAngles];
+						AngleToUse = angles[i];
 					}
 					rad = radians(AngleToUse);
 					if ((tan(rad + prevAngle) >= (vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngle) <= (vTexCoord.y) / (vTexCoord.x))){
