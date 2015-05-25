@@ -98,8 +98,7 @@
 			  		totalAngles = totalAngles + angles[i];
 			  		if (totalAngles >= 180.0){
 			  			if (totalAngles - angles[i] < 180.0){
-			  				rest = totalAngles - 180.0;
-							AngleToUse = angles[i] - rest;
+			  				AngleToUse = totalAngles - 180.0;
 			  			}
 			  			else if (totalAngles > 270.0){
 							rest = totalAngles - 270.0;
