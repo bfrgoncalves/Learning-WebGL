@@ -26,22 +26,24 @@
 			float rad = 0.0;
 			float AngleToUse = 0.0;
 			float rest;
+			int countAngles = 0;
 
 
 			if (vTexCoord.y < 0.0 && vTexCoord.x < 0.0){
 				while (totalAngles < 90.0){
-					totalAngles = totalAngles + angles[i];
+					countAngles = countAngles + 1;
+					totalAngles = totalAngles + angles[countAngles];
 					if (totalAngles > 90.0){
 						rest = totalAngles - 90.0;
 						AngleToUse = angles[i] - rest;
 						hasRest = true;
 					}
 					else{
-						AngleToUse = angles[i];
+						AngleToUse = angles[countAngles];
 					}
 					rad = radians(AngleToUse);
 					if ((tan(rad + prevAngle) >= (vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngle) <= (vTexCoord.y) / (vTexCoord.x))){
-						float color = float(i) * 0.3;
+						float color = float(countAngles) * 0.3;
 						if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 							//gl_FragColor = vec4(1, 0, 0, 1);
 								 	
