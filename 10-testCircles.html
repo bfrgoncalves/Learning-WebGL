@@ -21,6 +21,7 @@
 			float prevAnglePN = radians(0.0);
 			float prevAnglePP = radians(0.0);
 			float prevAngleNP = radians(0.0);
+			float radQuad = radians(90.0);
 			float totalAnglesNN = 0.0;
 			float totalAnglesPN = 0.0;
 			float totalAnglesPP = 0.0;
@@ -58,7 +59,7 @@
 						rad = radians(angles[i]);
 					}
 
-					if ((tan(rad + prevAnglePN) <= (vTexCoord.y) / -(vTexCoord.x)) && vTexCoord.x > 0.0){
+					if ((tan(rad + prevAnglePN) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(radQuad - (radQuad+rad + prevAnglePN)) <= (vTexCoord.y) / -(vTexCoord.x)) && vTexCoord.x > 0.0){
 						float color = float(i) * 0.3;
 						if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 							//gl_FragColor = vec4(1, 0, 0, 1);
