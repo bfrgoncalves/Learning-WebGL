@@ -74,7 +74,7 @@
 						}
 
 						rad = radians(AngleToUse);
-					 	 if ((tan(radQuad - (rad + prevAngle)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(radQuad - (prevAngle)) >= (vTexCoord.y) / -(vTexCoord.x)) && vTexCoord.x > 0.0){
+					 	 if ((tan(radQuad - (rad + prevAngle)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(radQuad - (prevAngle)) >= (vTexCoord.y) / -(vTexCoord.x))){
 					 	 	float color = float(i) * 0.3;
 					 	 	if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 					 	 		//gl_FragColor = vec4(1, 0, 0, 1);
@@ -146,7 +146,7 @@
 			 			}
 
 			 			rad = radians(AngleToUse);
-			 		 	 if ((tan((rad + prevAngle)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan((prevAngle)) >= (vTexCoord.y) / -(vTexCoord.x)) && vTexCoord.x > 0.0){
+			 		 	 if ((tan(radQuad - (rad + prevAngle)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(radQuad - (prevAngle)) >= (vTexCoord.y) / -(vTexCoord.x))){
 			 		 	 	float color = float(i) * 0.3;
 			 		 	 	if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 			 		 	 		//gl_FragColor = vec4(1, 0, 0, 1);
