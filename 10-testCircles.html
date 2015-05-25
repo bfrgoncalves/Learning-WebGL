@@ -20,17 +20,9 @@
 			float totalAngles = 0.0;
 			bool found = false;
 			for (int i = 0; i < 3; i++){
+				float rad = radians(angles[i]);
 				totalAngles = totalAngles + angles[i];
-				float rad;
 				//float rest = radians(360.0) - (prevAngle);
-				if (totalAngles > 90.0) {
-					float rest = totalAngles - 90.0;
-					float angleToUse = angles[i] - rest;
-					float rad = radians(angleToUse);
-				}
-				else{
-					float rad = radians(angles[i]);
-				}
 				if ((tan(rad + prevAngle) >= (vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngle) <= (vTexCoord.y) / (vTexCoord.x))){
 					float color = float(i) * 0.3;
 					if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
