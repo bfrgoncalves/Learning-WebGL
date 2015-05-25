@@ -26,6 +26,7 @@
 			float totalAnglesPP = 0.0;
 			float totalAnglesNP = 0.0;
 			bool found = false;
+			float rad = 0.0;
 
 			for (int i = 0; i < 3; i++){
 
@@ -34,7 +35,7 @@
 				}
 
 				if (totalAnglesNN < 90.0) {
-					float rad = radians(angles[i]);
+					rad = radians(angles[i]);
 					if ((tan(rad + prevAngleNN) >= (vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngleNN) <= (vTexCoord.y) / (vTexCoord.x))){
 						float color = float(i) * 0.3;
 						if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
@@ -50,11 +51,11 @@
 				else{
 					if (totalAnglesPN == 0.0){
 						totalAnglesPN = totalAnglesNN - 90.0;
-						float rad = radians(totalAnglesPN);
+						rad = radians(totalAnglesPN);
 					}
 					else{
 						totalAnglesPN = totalAnglesPN + angles[i];
-						float rad = radians(angles[i]);
+						rad = radians(angles[i]);
 					}
 
 					if ((tan(rad + prevAnglePN) >= -((vTexCoord.y) / (vTexCoord.x))) && -((tan(prevAnglePN) <= (vTexCoord.y) / (vTexCoord.x)))){
