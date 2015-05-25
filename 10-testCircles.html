@@ -44,7 +44,7 @@
 					else{
 						AngleToUse = angles[i];
 					}
-					rad = radians(AngleToUse[i]);
+					rad = radians(AngleToUse);
 					if ((tan(rad + prevAngleNN) >= (vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngleNN) <= (vTexCoord.y) / (vTexCoord.x))){
 						float color = float(i) * 0.3;
 						if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
