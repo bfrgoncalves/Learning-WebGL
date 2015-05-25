@@ -59,7 +59,7 @@
 						rad = radians(angles[i]);
 					}
 
-					if ((tan(radQuad - (rad + prevAnglePN)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(prevAnglePN) >= (vTexCoord.y) / -(vTexCoord.x)) &&vTexCoord.x > 0.0){
+					if ((tan(radQuad - (rad + prevAnglePN)) <= (vTexCoord.y) / -(vTexCoord.x)) && vTexCoord.x > 0.0){
 						float color = float(i) * 0.3;
 						if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 							//gl_FragColor = vec4(1, 0, 0, 1);
