@@ -54,10 +54,9 @@
 			 			break;
 			 		}
 			 	}
+			}
 
-			 }
-
-			 else{
+			else{
 			 	if (vTexCoord.y < 0.0 && vTexCoord.x > 0.0){
 			 		for (int i = 0; i<4;i++){
 				 		totalAngles = totalAngles + angles[i];
@@ -75,16 +74,16 @@
 				 			}
 
 				 			rad = radians(AngleToUse);
-				 		 	 if ((tan(radQuad - (rad + prevAngle)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(radQuad - (prevAngle)) >= (vTexCoord.y) / -(vTexCoord.x))){
-				 		 	 	float color = float(i) * 0.3;
-				 		 	 	if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
+				 		 	 //if ((tan(radQuad - (rad + prevAngle)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(radQuad - (prevAngle)) >= (vTexCoord.y) / -(vTexCoord.x))){
+				 		 	 	//float color = float(i) * 0.3;
+				 		 	 	//if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 				 		 	 		//gl_FragColor = vec4(1, 0, 0, 1);
 										 	
-				 		 	 			 		gl_FragColor = vec4(color, 0, 0, 1);
-				 		 	 			 		found = true;
+				 		 	 	//		 		gl_FragColor = vec4(color, 0, 0, 1);
+				 		 	 	//		 		found = true;
 
-				 		 	 	}	
-				 		 	 }
+				 		 	 	//}	
+				 		 	 //}
 				 		 	 prevAngle = prevAngle + rad;
 				 		 	 if (totalAngles > 180.0){
 				 				break;
