@@ -76,11 +76,11 @@
 
 				 			rad = radians(AngleToUse);
 				 		 	if ((tan(radQuad - (rad + prevAngle)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(radQuad - (prevAngle)) >= (vTexCoord.y) / -(vTexCoord.x))){
-				 		 	 	color = float(i) * 0.3;
+				 		 	 	//color = float(i) * 0.3;
 				 		 	 	//if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 				 		 	 		//gl_FragColor = vec4(1, 0, 0, 1);
 										 	
-				 		 	 			 		//gl_FragColor = vec4(1, 0, 0, 1);
+				 		 	 			 		gl_FragColor = vec4(1, 0, 0, 1);
 				 		 	 			 		found = true;
 
 				 		 	 	//}	
