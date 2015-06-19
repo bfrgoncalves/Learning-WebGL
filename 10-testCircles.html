@@ -3,20 +3,19 @@
 	<canvas id = 'c' width = '400' height = '400' style="border:1px solid #000000;"></canvas>
 	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
 	<script id = 'vshader' type = 'x-shader'>
-		#version 300 es
-		in vec2 aVertexPosition; //Atributes are passed per vertex data
-		out vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
+		#version 100
+		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
+		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
 		void main(){
 			vTexCoord = aVertexPosition;
 			gl_Position = vec4(aVertexPosition, 0, 1);
 		}
 	</script>
 	<script id = 'fshader' type = 'x-shader'>
-		#version 300 es
+		#version 100
 		precision mediump float;
-		out vec2 vTexCoord; //get the passing value from the vertex shader
+		varying vec2 vTexCoord; //get the passing value from the vertex shader
 		uniform int unumberOfParts;
-		out vec4 fragColor;
 		void main(){
 
 			vec4 angles = vec4(100.0, 110.0, 70.0, 30.0);
@@ -47,7 +46,7 @@
 						if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 							//gl_FragColor = vec4(1, 0, 0, 1);
 								 	
-								 		fragColor = vec4(color, 0, 0, 1);
+								 		gl_FragColor = vec4(color, 0, 0, 1);
 								 		found = true;
 
 						}	
@@ -60,108 +59,108 @@
 
 			}
 
-			// else if (vTexCoord.y < 0.0 && vTexCoord.x > 0.0){
-			// 	for (int i = 0; i<4;i++){
-			// 		totalAngles = totalAngles + angles[i];
-			// 		if (totalAngles >= 90.0){
-			// 			if (totalAngles - angles[i] < 90.0){
-			// 				AngleToUse = totalAngles - 90.0;
-			// 			}
-			// 			else if (totalAngles > 180.0){
-			// 				rest = totalAngles - 180.0;
-			// 				AngleToUse = angles[i] - rest;
-			// 				hasRest = true;
-			// 			}
-			// 			else{
-			// 				AngleToUse = angles[i];
-			// 			}
+			else if (vTexCoord.y < 0.0 && vTexCoord.x > 0.0){
+				for (int i = 0; i<4;i++){
+					totalAngles = totalAngles + angles[i];
+					if (totalAngles >= 90.0){
+						if (totalAngles - angles[i] < 90.0){
+							AngleToUse = totalAngles - 90.0;
+						}
+						else if (totalAngles > 180.0){
+							rest = totalAngles - 180.0;
+							AngleToUse = angles[i] - rest;
+							hasRest = true;
+						}
+						else{
+							AngleToUse = angles[i];
+						}
 
-			// 			rad = radians(AngleToUse);
-			// 		 	 if ((tan(radQuad - (rad + prevAngle)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(radQuad - (prevAngle)) >= (vTexCoord.y) / -(vTexCoord.x))){
-			// 		 	 	float color = float(i) * 0.3;
-			// 		 	 	if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
-			// 		 	 		//gl_FragColor = vec4(1, 0, 0, 1);
+						rad = radians(AngleToUse);
+					 	 if ((tan(radQuad - (rad + prevAngle)) <= (vTexCoord.y) / -(vTexCoord.x)) && (tan(radQuad - (prevAngle)) >= (vTexCoord.y) / -(vTexCoord.x))){
+					 	 	float color = float(i) * 0.3;
+					 	 	if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
+					 	 		//gl_FragColor = vec4(1, 0, 0, 1);
 									 	
-			// 		 	 			 		gl_FragColor = vec4(color, 0, 0, 1);
-			// 		 	 			 		found = true;
+					 	 			 		gl_FragColor = vec4(color, 0, 0, 1);
+					 	 			 		found = true;
 
-			// 		 	 	}	
-			// 		 	 }
-			// 		 	 prevAngle = prevAngle + rad;
-			// 		 	 if (totalAngles > 180.0){
-			// 				break;
-			// 			 }
+					 	 	}	
+					 	 }
+					 	 prevAngle = prevAngle + rad;
+					 	 if (totalAngles > 180.0){
+							break;
+						 }
 
-			// 		} 
-			// 	}
-			// }
+					} 
+				}
+			}
 
-			//  else if (vTexCoord.y > 0.0 && vTexCoord.x > 0.0){
-			//   	for (int i = 0; i<4;i++){
-			//   		totalAngles = totalAngles + angles[i];
-			//   		if (totalAngles >= 180.0){
-			//   			if (totalAngles - angles[i] < 180.0){
-			//   				AngleToUse = totalAngles - 180.0;
-			//   			}
-			//   			else if (totalAngles > 270.0){
-			// 				rest = totalAngles - 270.0;
-			// 				AngleToUse = angles[i] - rest;
-			// 				hasRest = true;
-			// 			}
-			//   			else{
-			//   				AngleToUse = angles[i];
-			//   			}
+			 else if (vTexCoord.y > 0.0 && vTexCoord.x > 0.0){
+			  	for (int i = 0; i<4;i++){
+			  		totalAngles = totalAngles + angles[i];
+			  		if (totalAngles >= 180.0){
+			  			if (totalAngles - angles[i] < 180.0){
+			  				AngleToUse = totalAngles - 180.0;
+			  			}
+			  			else if (totalAngles > 270.0){
+							rest = totalAngles - 270.0;
+							AngleToUse = angles[i] - rest;
+							hasRest = true;
+						}
+			  			else{
+			  				AngleToUse = angles[i];
+			  			}
 
-			//   			rad = radians(AngleToUse);
-			//   		 	if ((tan(rad + prevAngle) >= (vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngle) <= (vTexCoord.y) / (vTexCoord.x))){
-			//  				float color = float(i) * 0.3;
-			//  				if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
-			//  					//gl_FragColor = vec4(1, 0, 0, 1);
+			  			rad = radians(AngleToUse);
+			  		 	if ((tan(rad + prevAngle) >= (vTexCoord.y) / (vTexCoord.x)) && (tan(prevAngle) <= (vTexCoord.y) / (vTexCoord.x))){
+			 				float color = float(i) * 0.3;
+			 				if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
+			 					//gl_FragColor = vec4(1, 0, 0, 1);
 									 	
-			//  						 		gl_FragColor = vec4(color, 0, 0, 1);
-			//  						 		found = true;
+			 						 		gl_FragColor = vec4(color, 0, 0, 1);
+			 						 		found = true;
 
-			//  				}	
-			//  			}
-			//   		 	 prevAngle = prevAngle + rad;
-			//   		 	 if (totalAngles > 270.0){
-			// 				break;
-			// 			 }
+			 				}	
+			 			}
+			  		 	 prevAngle = prevAngle + rad;
+			  		 	 if (totalAngles > 270.0){
+							break;
+						 }
 
-			//   		} 
-			//   	}
-			//   }
+			  		} 
+			  	}
+			  }
 
-			//   else if (vTexCoord.y > 0.0 && vTexCoord.x < 0.0){
-			//  	for (int i = 0; i<4;i++){
-			//  		totalAngles = totalAngles + angles[i];
-			//  		if (totalAngles >= 270.0){
-			//  			if (totalAngles - angles[i] < 270.0){
-			//  				AngleToUse = totalAngles - 270.0;
-			//  			}
-			//  			else{
-			//  				AngleToUse = angles[i];
-			//  			}
+			  else if (vTexCoord.y > 0.0 && vTexCoord.x < 0.0){
+			 	for (int i = 0; i<4;i++){
+			 		totalAngles = totalAngles + angles[i];
+			 		if (totalAngles >= 270.0){
+			 			if (totalAngles - angles[i] < 270.0){
+			 				AngleToUse = totalAngles - 270.0;
+			 			}
+			 			else{
+			 				AngleToUse = angles[i];
+			 			}
 
-			//  			rad = radians(AngleToUse);
-			//  		 	 if ((tan((rad + prevAngle)) >= -(vTexCoord.x) / (vTexCoord.y)) && (tan((prevAngle)) <= -(vTexCoord.x) / (vTexCoord.y))){
-			//  		 	 	float color = float(i) * 0.3;
-			//  		 	 	if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
-			//  		 	 		//gl_FragColor = vec4(1, 0, 0, 1);
+			 			rad = radians(AngleToUse);
+			 		 	 if ((tan((rad + prevAngle)) >= -(vTexCoord.x) / (vTexCoord.y)) && (tan((prevAngle)) <= -(vTexCoord.x) / (vTexCoord.y))){
+			 		 	 	float color = float(i) * 0.3;
+			 		 	 	if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
+			 		 	 		//gl_FragColor = vec4(1, 0, 0, 1);
 									 	
-			//  		 	 			 		gl_FragColor = vec4(color, 0, 0, 1);
-			//  		 	 			 		found = true;
+			 		 	 			 		gl_FragColor = vec4(color, 0, 0, 1);
+			 		 	 			 		found = true;
 
-			//  		 	 	}	
-			//  		 	 }
-			//  		 	 prevAngle = prevAngle + rad;
-			//  		 	 if (totalAngles > 360.0){
-			//  				break;
-			//  			 }
+			 		 	 	}	
+			 		 	 }
+			 		 	 prevAngle = prevAngle + rad;
+			 		 	 if (totalAngles > 360.0){
+			 				break;
+			 			 }
 
-			//  		} 
-			//   	}
-			//   }
+			 		} 
+			  	}
+			  }
 
 			
 		
