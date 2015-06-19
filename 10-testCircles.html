@@ -3,21 +3,19 @@
 	<canvas id = 'c' width = '400' height = '400' style="border:1px solid #000000;"></canvas>
 	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
 	<script id = 'vshader' type = 'x-shader'>
-		#version 400
-		layout (location = 0) in vec3 aVertexPosition;
-		//attribute vec2 aVertexPosition; //Atributes are passed per vertex data
-		out vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
+		#version 100
+		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
+		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
 		void main(){
 			vTexCoord = aVertexPosition;
 			gl_Position = vec4(aVertexPosition, 0, 1);
 		}
 	</script>
 	<script id = 'fshader' type = 'x-shader'>
-		#version 400
+		#version 100
 		precision mediump float;
-		in vec2 vTexCoord; //get the passing value from the vertex shader
-		//uniform int unumberOfParts;
-		out vec4 FragColor;
+		varying vec2 vTexCoord; //get the passing value from the vertex shader
+		uniform int unumberOfParts;
 		void main(){
 
 			vec4 angles = vec4(100.0, 110.0, 70.0, 30.0);
@@ -168,7 +166,10 @@
 		
 		if (found == false){
 			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
-				FragColor = vec4(0, 0, 1, 1);
+				gl_FragColor = vec4(0, 0, 1, 1);
+			}
+			else{
+				gl_FragColor = vec4(0, 0, 0, 1);
 			}
 		}
 			
