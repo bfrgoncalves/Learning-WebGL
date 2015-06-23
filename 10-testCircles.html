@@ -29,7 +29,7 @@
 
 			if (vTexCoord.y < 0.0 && vTexCoord.x < 0.0){
 				for (int i = 0; i<4;i++){
-			//		totalAngles = totalAngles + angles[i];
+					totalAngles = totalAngles + angles[i];
 			//		if (totalAngles > 90.0){
 			//			rest = totalAngles - 90.0;
 			//			AngleToUse = angles[i] - rest;
@@ -50,9 +50,9 @@
 						}	
 //					}
 //					prevAngle = prevAngle + rad;
-//					if (totalAngles > 90.0){
-//						break;
-//					}
+					if (totalAngles > 90.0){
+						break;
+					}
 				}
 //
 			}
