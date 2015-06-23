@@ -46,7 +46,7 @@
 						if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 							//gl_FragColor = vec4(1, 0, 0, 1);
 								 	
-								 		gl_FragColor = vec4(color, 0, 0, 1);
+								 		gl_FragColor = vec4(1, 0, 0, 1);
 								 		found = true;
 
 						}	
@@ -179,8 +179,6 @@
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
-	var maxRenderbufferSize = gl.getParameter(gl.MAX_RENDERBUFFER_SIZE);
-	console.log(maxRenderbufferSize);
 
 	//To create some geometry we need some BUFFER to hold some VERTEX data
 	var vertexPosBuffer = gl.createBuffer();
