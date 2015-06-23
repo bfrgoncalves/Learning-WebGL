@@ -179,6 +179,8 @@
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
+	var maxRenderbufferSize = gl.getParameter(gl.MAX_RENDERBUFFER_SIZE);
+	console.log(maxRenderbufferSize);
 
 	//To create some geometry we need some BUFFER to hold some VERTEX data
 	var vertexPosBuffer = gl.createBuffer();
