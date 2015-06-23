@@ -27,7 +27,7 @@
 			float AngleToUse = 0.0;
 			float rest;
 
-			//if (vTexCoord.y < 0.0 && vTexCoord.x < 0.0){
+			if (vTexCoord.y < 0.0 && vTexCoord.x < 0.0){
 			//	for (int i = 0; i<4;i++){
 			//		totalAngles = totalAngles + angles[i];
 			//		if (totalAngles > 90.0){
@@ -44,8 +44,8 @@
 			//			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
 			//				//gl_FragColor = vec4(1, 0, 0, 1);
 			//					 	
-			//					 		gl_FragColor = vec4(1, 0, 0, 1);
-			//					 		found = true;
+								 		gl_FragColor = vec4(1, 0, 0, 1);
+								 		found = true;
 //
 //						}	
 //					}
@@ -55,7 +55,7 @@
 //					}
 //				}
 //
-//			}
+			}
 
 			if (vTexCoord.y < 0.0 && vTexCoord.x > 0.0){
 				for (int i = 0; i<4;i++){
