@@ -213,6 +213,7 @@
 	console.log(vertexPosBuffer.numberOfParts);
 	gl.uniform1i(program.numberOfParts, vertexPosBuffer.numberOfParts);
 	//gl.uniform2f(program.offsetUniform, offset[0], offset[1]); //passing the values to the location of the uniform inside the program
+	gl.finish();
 	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
 
 	</script>
