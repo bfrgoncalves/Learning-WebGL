@@ -28,7 +28,15 @@
 	</script>
 	<script>
 
-	var vertices = [
+	// var vertices = [
+ //    //  Position   Color             Texcoords
+ //        -1.0,  1.0, 1.0, 0.0, 0.0, 0.0, 0.0, // Top-left
+ //         1.0,  1.0, 0.0, 1.0, 0.0, 1.0, 0.0, // Top-right
+ //         1.0, -1.0, 0.0, 0.0, 1.0, 1.0, 1.0, // Bottom-right
+ //        -1.0, -1.0, 1.0, 1.0, 1.0, 0.0, 1.0  // Bottom-left
+ //    ];
+
+ 	var vertices = [
     //  Position   Color             Texcoords
         -1.0,  1.0, 1.0, 0.0, 0.0, 0.0, 0.0, // Top-left
          1.0,  1.0, 0.0, 1.0, 0.0, 1.0, 0.0, // Top-right
@@ -71,7 +79,7 @@
 	var program = createProgram(vs,fs);
 	gl.useProgram(program);
 	program.vertexPosAttrib = gl.getAttribLocation(program,'position');
-	program.color = gl.getAttribLocation(program,'position');
+	program.color = gl.getAttribLocation(program,'color');
 	program.texcoord = gl.getAttribLocation(program,'texcoord');
 
 	program.samplerUniform = gl.getUniformLocation(program,'uSampler'); //get the position of the texture sampler uniform
