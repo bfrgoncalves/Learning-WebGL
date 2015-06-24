@@ -12,7 +12,7 @@
 	       Color = color;
 	       Texcoord = texcoord;
 	       gl_Position = vec4(position, 0.0, 1.0);
-	    };
+	    }
 
 	</script>
 	<script id = 'fshader' type = 'x-shader'>
@@ -22,7 +22,7 @@
 	    uniform sampler2D tex;
 	    void main() {
 	       gl_FragColor = texture(tex, Texcoord) * vec4(Color, 1.0);
-	    };
+	    }
 	
 	</script>
 	<script>
