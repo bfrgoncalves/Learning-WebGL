@@ -55,7 +55,6 @@
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
 	vertexPosBuffer.itemSize = 3; //Atributes for the buffer. SIze and number of items
 	vertexPosBuffer.numItems = 4;
-	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize, gl.FLOAT, false , 0, 0); 
 
 
 	var colorbuffer = gl.createBuffer();
@@ -65,7 +64,6 @@
 																				//once and draw it several times
 	colorbuffer.itemSize = 4; //Atributes for the buffer. SIze and number of items
 	colorbuffer.numItems = 4;
-	gl.vertexAttribPointer(program.vertexColor, colorbuffer.itemSize, gl.FLOAT, false , 0, 0);
 
 
 	//Define VERTEX SHADER and FRAGMENT SHADER
@@ -82,8 +80,15 @@
 	program.vertexColor = gl.getAttribLocation(program,'aVertexColor');
 	gl.enableVertexAttribArray(program.vertexColor);
 
-	gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertexPosBuffer.numItems);
+	drawScene();
 
+	function drawScene(){
+
+
+		gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize, gl.FLOAT, false , 0, 0); 
+		gl.vertexAttribPointer(program.vertexColor, colorbuffer.itemSize, gl.FLOAT, false , 0, 0);
+		gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertexPosBuffer.numItems);
+	}
 
 	</script>
 
