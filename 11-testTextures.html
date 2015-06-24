@@ -4,12 +4,12 @@
 	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
 	<script id = 'vshader' type = 'x-shader'>
 		attribute vec2 position;
-	    // attribute vec3 color;
+	    attribute vec3 color;
 	    attribute vec2 texcoord;
-	    // varying vec3 Color;
+	    varying vec3 Color;
 	    varying vec2 Texcoord;
 	    void main() {
-	       // Color = color;
+	       Color = color;
 	       Texcoord = texcoord;
 	       gl_Position = vec4(position, 0.0, 1.0);
 	    }
@@ -17,12 +17,12 @@
 	</script>
 	<script id = 'fshader' type = 'x-shader'>
 		precision mediump float;
-		// varying vec3 Color;
+		varying vec3 Color;
 	    varying vec2 Texcoord;
 
 	    uniform sampler2D tex;
 	    void main() {
-	       gl_FragColor = texture2D(tex, Texcoord);
+	       gl_FragColor = texture2D(tex, Texcoord) * vec4(Color, 1.0);
 	    }
 	
 	</script>
@@ -38,16 +38,21 @@
 
  	var vertices = [
     //  Position   Color             Texcoords
-        -1.0,  1.0,  1.0, 0.0, // Top-left
-         1.0,  1.0,  1.0, 0.0, // Top-right
-         1.0, -1.0,  1.0, 1.0, // Bottom-right
-        -1.0, -1.0,  0.0, 1.0  // Bottom-left
+        -1.0,  1.0, 1.0, 0.0, 0.0, 0.0, 0.0, // Top-left
+         1.0,  1.0, 0.0, 1.0, 0.0, 1.0, 0.0, // Top-right
+         1.0, -1.0, 0.0, 0.0, 1.0, 1.0, 1.0, // Bottom-right
+        -1.0, -1.0, 1.0, 1.0, 1.0, 0.0, 1.0  // Bottom-left
     ];
 
     var pixels = [
-    0.0, 0.5, 0.0,   0.5, 1.0, 1.0,
-    0.0, 0.0, 1.0,   0.0, 1.0, 0.0
+    0.0, 0.0, 0.0,   1.0, 1.0, 1.0,
+    1.0, 1.0, 1.0,   0.0, 0.0, 0.0
 	];
+
+	var elements = [
+        0, 1, 2,
+        2, 3, 0
+    ];
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
@@ -57,6 +62,10 @@
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
 	//var vertices = [-1, -1 , 1, -1, -1, 1 , 1, 1] //coordenates range from -1 to 1. So this will cover all the canvas
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
+	var elementbuffer = gl.createBuffer();
+
+	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, elementbuffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 																				//once and draw it several times
 	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
 	vertexPosBuffer.numItems = 4;
@@ -79,14 +88,14 @@
 	var program = createProgram(vs,fs);
 	gl.useProgram(program);
 	program.vertexPosAttrib = gl.getAttribLocation(program,'position');
-	// program.color = gl.getAttribLocation(program,'color');
+	program.color = gl.getAttribLocation(program,'color');
 	program.texcoord = gl.getAttribLocation(program,'texcoord');
 
 	program.samplerUniform = gl.getUniformLocation(program,'uSampler'); //get the position of the texture sampler uniform
 	gl.enableVertexAttribArray(program.vertexPosArray);
 	gl.vertexAttribPointer(program.vertexPosAttrib, 2, gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
-	// gl.vertexAttribPointer(program.color, 3, gl.FLOAT, false , 0, 2);
-	gl.vertexAttribPointer(program.texcoord, 2, gl.FLOAT, false , 0, 2);
+	gl.vertexAttribPointer(program.color, 3, gl.FLOAT, false , 0, 2);
+	gl.vertexAttribPointer(program.texcoord, 2, gl.FLOAT, false , 0, 5);
 	var texture = gl.createTexture();
 
 	gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -95,7 +104,8 @@
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 	//gl.uniform1i(program.samplerUniform, 0); //passing the uniform value of texture unit 0;
 	//gl.finish();
-	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
+	gl.drawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	//gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
 
 	</script>
 
