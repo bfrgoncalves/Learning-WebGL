@@ -54,6 +54,8 @@
         2, 3, 0
     ];
 
+    var elementSize = elements.length;
+
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
 
@@ -65,7 +67,7 @@
 	var elementbuffer = gl.createBuffer();
 
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, elementbuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, elements.length, new Int32Array(elements), gl.STATIC_DRAW);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, elementSize, elements, gl.STATIC_DRAW);
 																				//once and draw it several times
 	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
 	vertexPosBuffer.numItems = 4;
