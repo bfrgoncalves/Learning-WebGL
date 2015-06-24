@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<canvas id = 'c' width = '400' height = '400' style="border:1px solid #000000;"></canvas>
+	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
+	<script id = 'vshader' type = 'x-shader'>
+		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
+		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
+		void main(){
+			vTexCoord = aVertexPosition;
+			gl_Position = vec4(aVertexPosition, 0, 1);
+		}
+	</script>
+	<script id = 'fshader' type = 'x-shader'>
+		precision mediump float;
+		varying vec2 vTexCoord; //get the passing value from the vertex shader
+		void main(){
+
+
+			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
+				gl_FragColor = vec4(0, 0, 1, 1);
+			}
+			else{
+				gl_FragColor = vec4(1, 1, 1, 1);
+			}
+		
+			
+		}
+	</script>
+	<script>
+
+	var c = document.getElementById('c');
+	var gl = c.getContext('experimental-webgl');
+
+	//To create some geometry we need some BUFFER to hold some VERTEX data
+	var vertexPosBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
+	var vertices = [-1, -1 , 1, -1, -1, 1 , 1, 1] //coordenates range from -1 to 1. So this will cover all the canvas
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
+																				//once and draw it several times
+	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
+	vertexPosBuffer.numItems = 4;
+	vertexPosBuffer.numberOfParts = 2;
+	/*
+	 2___ 3 
+	 |\  |		//Square is defined in this case as a triangle strip, two triangles combined
+	 | \ | 
+	0|__\|1
+	*/
+
+	//Define VERTEX SHADER and FRAGMENT SHADER
+	vs = document.getElementById('vshader').textContent;
+	fs = document.getElementById('fshader').textContent;
+
+	console.log(vs);
+	console.log(fs);
+
+
+	var program = createProgram(vs,fs);
+	gl.useProgram(program);
+	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
+	program.numberOfParts = gl.getUniformLocation(program,'anumberOfParts');
+	gl.enableVertexAttribArray(program.vertexPosArray);
+	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+	console.log(vertexPosBuffer.numberOfParts);
+	gl.uniform1i(program.numberOfParts, vertexPosBuffer.numberOfParts);
+	//gl.uniform2f(program.offsetUniform, offset[0], offset[1]); //passing the values to the location of the uniform inside the program
+	gl.finish();
+	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
+
+	</script>
+
+
+</html>
