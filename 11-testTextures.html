@@ -13,11 +13,12 @@
 	<script id = 'fshader' type = 'x-shader'>
 		precision mediump float;
 		varying vec2 vTexCoord; //get the passing value from the vertex shader
+		uniform sampler2D uSampler;
 		void main(){
 
 
 			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
-				gl_FragColor = vec4(0, 0, 1, 1);
+				gl_FragColor = texture2D(uSampler, vTexCoord);
 			}
 			else{
 				gl_FragColor = vec4(1, 1, 1, 1);
@@ -27,6 +28,11 @@
 		}
 	</script>
 	<script>
+
+	var  pixels = {
+	    0.0, 0.0, 0.0,   1.0, 1.0, 1.0,
+	    1.0, 1.0, 1.0,   0.0, 0.0, 0.0
+	};
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
@@ -59,11 +65,16 @@
 	gl.useProgram(program);
 	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
 	program.numberOfParts = gl.getUniformLocation(program,'anumberOfParts');
+	program.samplerUniform = gl.getUniformLocation(program,'uSampler'); //get the position of the texture sampler uniform
 	gl.enableVertexAttribArray(program.vertexPosArray);
 	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
-	console.log(vertexPosBuffer.numberOfParts);
-	gl.uniform1i(program.numberOfParts, vertexPosBuffer.numberOfParts);
-	//gl.uniform2f(program.offsetUniform, offset[0], offset[1]); //passing the values to the location of the uniform inside the program
+	var texture = gl.createTexture();
+	gl.activeTexture(gl.TEXTURE0);
+	gl.bindTexture(gl.TEXTURE_2D, texture);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+	gl.uniform1i(program.samplerUniform, 0); //passing the uniform value of texture unit 0;
 	gl.finish();
 	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
 
