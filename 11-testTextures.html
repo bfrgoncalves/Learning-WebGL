@@ -29,15 +29,15 @@
 
 	var vertices = [
     //  Position   Color             Texcoords
-        -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
-         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
-         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
-        -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
+        -0.5,  0.5, 1.0, 0.0, 0.0, 0.0, 0.0, // Top-left
+         0.5,  0.5, 0.0, 1.0, 0.0, 1.0, 0.0, // Top-right
+         0.5, -0.5, 0.0, 0.0, 1.0, 1.0, 1.0, // Bottom-right
+        -0.5, -0.5, 1.0, 1.0, 1.0, 0.0, 1.0  // Bottom-left
     ];
 
     var pixels = [
-    0.0f, 0.0f, 0.0f,1.0f,   1.0f, 1.0f, 1.0f,1.0f,
-    1.0f, 1.0f, 1.0f,1.0f,   0.0f, 0.0f, 0.0f,1.0f
+    0.0, 0.0, 0.0,   1.0, 1.0, 1.0,
+    1.0, 1.0, 1.0,   0.0, 0.0, 0.0
 	];
 
 	var c = document.getElementById('c');
@@ -81,7 +81,7 @@
 	var texture = gl.createTexture();
 
 	gl.bindTexture(gl.TEXTURE_2D, texture);
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.FLOAT, pixels);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.FLOAT, pixels);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 	//gl.uniform1i(program.samplerUniform, 0); //passing the uniform value of texture unit 0;
