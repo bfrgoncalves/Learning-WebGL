@@ -3,36 +3,37 @@
 	<canvas id = 'c' width = '400' height = '400' style="border:1px solid #000000;"></canvas>
 	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
 	<script id = 'vshader' type = 'x-shader'>
-		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
-		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
-		void main(){
-			vTexCoord = aVertexPosition;
-			gl_Position = vec4(aVertexPosition, 0, 1);
-		}
+		attribute vec2 position;
+	    attribute vec3 color;
+	    attribute vec2 texcoord;
+	    varying vec3 Color;
+	    varying vec2 Texcoord;
+	    void main() {
+	       Color = color;
+	       Texcoord = texcoord;
+	       gl_Position = vec4(position, 0.0, 1.0);
+	    };
+
 	</script>
 	<script id = 'fshader' type = 'x-shader'>
-		precision mediump float;
-		varying vec2 vTexCoord; //get the passing value from the vertex shader
-		uniform sampler2D uSampler;
-		void main(){
+		varying vec3 Color;
+	    varying vec2 Texcoord;
 
-
-			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
-				gl_FragColor = texture2D(uSampler, vTexCoord);
-			}
-			else{
-				gl_FragColor = vec4(1, 1, 1, 1);
-			}
-		
-			
-		}
+	    uniform sampler2D tex;
+	    void main() {
+	       gl_FragColor = texture(tex, Texcoord) * vec4(Color, 1.0);
+	    };
+	
 	</script>
 	<script>
 
-	var  pixels = [
-	    0.0, 0.0, 0.0,   1.0, 1.0, 1.0,
-	    1.0, 1.0, 1.0,   0.0, 0.0, 0.0
-	];
+	var vertices = [
+    //  Position   Color             Texcoords
+        -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
+         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
+         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
+        -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
+    ];
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
@@ -40,7 +41,7 @@
 	//To create some geometry we need some BUFFER to hold some VERTEX data
 	var vertexPosBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
-	var vertices = [-1, -1 , 1, -1, -1, 1 , 1, 1] //coordenates range from -1 to 1. So this will cover all the canvas
+	//var vertices = [-1, -1 , 1, -1, -1, 1 , 1, 1] //coordenates range from -1 to 1. So this will cover all the canvas
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
 																				//once and draw it several times
 	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
@@ -63,19 +64,23 @@
 
 	var program = createProgram(vs,fs);
 	gl.useProgram(program);
-	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
-	program.numberOfParts = gl.getUniformLocation(program,'anumberOfParts');
+	program.vertexPosAttrib = gl.getAttribLocation(program,'position');
+	program.color = gl.getAttribLocation(program,'position');
+	program.texcoord = gl.getAttribLocation(program,'texcoord');
+
 	program.samplerUniform = gl.getUniformLocation(program,'uSampler'); //get the position of the texture sampler uniform
 	gl.enableVertexAttribArray(program.vertexPosArray);
-	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+	gl.vertexAttribPointer(program.vertexPosAttrib, 2, gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+	gl.vertexAttribPointer(program.color, 3, gl.FLOAT, false , 0, 2);
+	gl.vertexAttribPointer(program.texcoord, 2, gl.FLOAT, false , 0, 5);
 	var texture = gl.createTexture();
-	gl.activeTexture(gl.TEXTURE0);
+
 	gl.bindTexture(gl.TEXTURE_2D, texture);
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, 2, 2, 0, gl.RGB, gl.FLOAT, pixels);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-	gl.uniform1i(program.samplerUniform, 0); //passing the uniform value of texture unit 0;
-	gl.finish();
+	//gl.uniform1i(program.samplerUniform, 0); //passing the uniform value of texture unit 0;
+	//gl.finish();
 	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
 
 	</script>
