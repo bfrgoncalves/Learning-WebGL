@@ -29,10 +29,6 @@
 	//Define VERTEX SHADER and FRAGMENT SHADER
 	vs = document.getElementById('vshader').textContent;
 	fs = document.getElementById('fshader').textContent;
-	var  pixels = [
-	    0.0, 0.0, 0.0,   1.0, 1.0, 1.0,
-	    1.0, 1.0, 1.0,   0.0, 0.0, 0.0
-	];
 
 	var program = createProgram(vs,fs);
 	gl.useProgram(program);
@@ -47,10 +43,10 @@
 		gl.activeTexture(gl.TEXTURE0);
 		gl.bindTexture(gl.TEXTURE_2D, texture);
 		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-		gl.uniform1i(program.samplerUniform, 0); //passing the uniform value of texture unit 0;
+		gl.uniform1i(program.samplerIUniform, 0); //passing the uniform value of texture unit 0;
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
 	}
 
