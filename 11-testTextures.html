@@ -37,8 +37,8 @@
     ];
 
     var pixels = [
-    0.0, 0.0, 0.0,1.0,   1.0, 1.0, 1.0,1.0,
-    1.0, 1.0, 1.0,1.0,   0.0, 0.0, 0.0,1.0
+    0.0, 0.0, 0.0,   1.0, 1.0, 1.0,
+    1.0, 1.0, 1.0,   0.0, 0.0, 0.0
 	];
 
 	var c = document.getElementById('c');
@@ -82,7 +82,7 @@
 	var texture = gl.createTexture();
 
 	gl.bindTexture(gl.TEXTURE_2D, texture);
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 2, 2, 0, gl.RGBA, gl.FLOAT, pixels);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, 2, 2, 0, gl.RGB, gl.FLOAT, pixels);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 	//gl.uniform1i(program.samplerUniform, 0); //passing the uniform value of texture unit 0;
