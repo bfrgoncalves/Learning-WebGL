@@ -86,8 +86,7 @@
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
 		gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize, gl.FLOAT, false , 0, 0); 
 		gl.bindBuffer(gl.ARRAY_BUFFER, colorbuffer);
-		gl.vertexAttribPointer(program.vertexColor, colorbuffer.itemSize, gl.FLOAT, false , 0, 2);
-		gl.finish();
+		gl.vertexAttribPointer(program.vertexColor, colorbuffer.itemSize, gl.FLOAT, false , 0, 0);
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertexPosBuffer.numItems);
 	}
 
