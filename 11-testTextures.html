@@ -41,17 +41,17 @@
 	for(i in angles){
 		if (sumAngles <= 90){
 			console.log(sumAngles);
-			if (i <= 90) sumAngles += i;
-			else sumAngles += 90;
+			if (angles[i] <= 90) sumAngles = sumAngles + angles[i];
+			else sumAngles = sumAngles + 90;
 
 			if  (sumAngles < 60){
 				yCoord = 1;
-				xCoord = Math.tan(i)*yCoord;
+				xCoord = Math.tan(angles[i])*yCoord;
 				coordinates.push([xCoord, yCoord]);
 			} 
 			else{
 				xCoord = 1;
-				yCoord = Math.tan(i)*yCoord;
+				yCoord = Math.tan(angles[i])*yCoord;
 				coordinates.push([xCoord, yCoord]);
 			}
 
