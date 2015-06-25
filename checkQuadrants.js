@@ -29,7 +29,7 @@ function checkQuadrants(allAngles, callback){
 		
 		for(i=0; i <angles.length;i++){
 			if (sumAngles == 90) break;
-			if (!checked[i]){
+			if (checked[i] == false){
 				if(angles[i] + sumAngles <= 90){
 					sumAngles = sumAngles + angles[i];
 					angleToUse = angles[i];
@@ -55,7 +55,7 @@ function checkQuadrants(allAngles, callback){
 		for(i=0; i <angles.length;i++){
 			if (sumAngles == 180) break;
 			console.log(i, checked[i]);
-			if (!checked[i]){
+			if (checked[i] == false){
 				if (restAngle!=0){
 					sumAngles = sumAngles + restAngle;
 					angleToUse = restAngle;
@@ -85,7 +85,7 @@ function checkQuadrants(allAngles, callback){
 		
 		for(i=0; i <angles.length;i++){
 			if (sumAngles == 270) break;
-			if (!checked[i]){
+			if (checked[i] == false){
 				if (restAngle!=0){
 					console.log(restAngle);
 					sumAngles = sumAngles + restAngle;
