@@ -7,9 +7,8 @@
 		attribute vec3 aColorPosition;
 		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
 		varying vec3 Color;
-		uniform vec2 uOffset;
 		void main(){
-			vTexCoord = aVertexPosition + uOffset;
+			vTexCoord = aVertexPosition;
 			Color = aColorPosition;
 			gl_Position = vec4(aVertexPosition, 0, 1);
 		}
@@ -33,7 +32,6 @@
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
-	var offset = [1, 1];
 
 	//Define VERTEX SHADER and FRAGMENT SHADER
 	vs = document.getElementById('vshader').textContent;
@@ -45,10 +43,7 @@
 
 	program.vertexPosAttrib = gl.getAttribLocation(program, 'aVertexPosition');
 	program.colorAttrib = gl.getAttribLocation(program, 'aColorPosition');
-	program.offsetUniform = gl.getUniformLocation(program,'uOffset');
-	console.log(program.vertexPosAttrib);
-	console.log(program.colorAttrib);
-	console.log(program.offsetUniform);
+
 	gl.enableVertexAttribArray(program.vertexPosAttrib);
 	gl.enableVertexAttribArray(program.colorAttrib);
 
@@ -85,7 +80,6 @@
 	colorBuffer.numItems = 8;
 
 	gl.vertexAttribPointer(program.colorAttrib, colorBuffer.itemSize , gl.FLOAT, false , 0, 0);
-	gl.uniform2f(program.offsetUniform, offset[0], offset[1]);
 	/*
 	 2___ 3 
 	 |\  |		//Square is defined in this case as a triangle strip, two triangles combined
