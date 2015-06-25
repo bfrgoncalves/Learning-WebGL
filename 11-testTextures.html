@@ -52,12 +52,12 @@
 	//To create some geometry we need some BUFFER to hold some VERTEX data
 	var vertexPosBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
-	var vertices = [0, 0 , 0, -1, 1, 0 , 0, 1, -1, 0] //coordenates range from -1 to 1. So this will cover all the canvas
+	var vertices = [0, 0 , 0, -1, 1, 0 , 0, 1, -1, 0, 0, -1] //coordenates range from -1 to 1. So this will cover all the canvas
 
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
 																				//once and draw it several times
 	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
-	vertexPosBuffer.numItems = 5;
+	vertexPosBuffer.numItems = 6;
 	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
 
 	var colors = [
@@ -65,7 +65,8 @@
 		0, 0 , 1,
 		1, 0 , 0,
 		1, 0 , 0,
-		1, 0 , 0
+		1, 0 , 0,
+		0, 0 , 1
 	];
 
 	var colorElements = []
@@ -75,7 +76,7 @@
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 	
 	colorBuffer.itemSize = 3; //Atributes for the buffer. SIze and number of items
-	colorBuffer.numItems = 5;
+	colorBuffer.numItems = 6;
 
 	gl.vertexAttribPointer(program.colorAttrib, colorBuffer.itemSize , gl.FLOAT, false , 0, 0);
 	/*
