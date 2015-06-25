@@ -56,7 +56,7 @@ function checkQuadrants(allAngles, callback){
 			if (sumAngles == 180) break;
 			console.log(i, checked[i]);
 			if (checked[i] == false){
-				if (restAngle!=0){
+				if (restAngle != 0){
 					sumAngles = sumAngles + restAngle;
 					angleToUse = restAngle;
 					checked[i] = true;
@@ -67,6 +67,7 @@ function checkQuadrants(allAngles, callback){
 					sumAngles = sumAngles + angles[i];
 					angleToUse = angles[i];
 					console.log(angleToUse);
+					console.log(sumAngles);
 					checked[i] = true;
 				}
 				else if(sumAngles < 180) {
