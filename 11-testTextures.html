@@ -40,17 +40,17 @@
 
 	for(i in angles){
 		if (sumAngles <= 90){
-			if (angles[i] <= 90) sumAngles += angles[i];
+			if (i <= 90) sumAngles += i;
 			else sumAngles += 90;
 
 			if  (sumAngles < 60){
 				yCoord = 1;
-				xCoord = Math.tan(sumAngles)*yCoord;
+				xCoord = Math.tan(i)*yCoord;
 				coordinates.push([xCoord, yCoord]);
 			} 
 			else{
 				xCoord = 1;
-				yCoord = Math.tan(sumAngles)*yCoord;
+				yCoord = Math.tan(i)*yCoord;
 				coordinates.push([xCoord, yCoord]);
 			}
 
