@@ -31,67 +31,76 @@
 	<script>
 
 	var angles = [50.0, 50.0, 70.0, 30.0];
-	checkQuadrants(angles);
-
-
-	var c = document.getElementById('c');
-	var gl = c.getContext('experimental-webgl');
-
-	//Define VERTEX SHADER and FRAGMENT SHADER
-	vs = document.getElementById('vshader').textContent;
-	fs = document.getElementById('fshader').textContent;
-
-
-	var program = createProgram(vs,fs);
-	gl.useProgram(program);
-
-	program.vertexPosAttrib = gl.getAttribLocation(program, 'aVertexPosition');
-	program.colorAttrib = gl.getAttribLocation(program, 'aColorPosition');
-
-	gl.enableVertexAttribArray(program.vertexPosAttrib);
-	gl.enableVertexAttribArray(program.colorAttrib);
-
-
-	//To create some geometry we need some BUFFER to hold some VERTEX data
-	var vertexPosBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
-	var vertices = [0, 0 , 0, -1, 0.8, -1, 1.0, -0.8, 1, 0 , 0, 1, -1, 0, 0, -1] //coordenates range from -1 to 1. So this will cover all the canvas
-
-	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
-																				//once and draw it several times
-	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
-	vertexPosBuffer.numItems = 8;
-	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
-
-	var colors = [
-		0, 0 , 1,
-		0, 0 , 1,
-		0, 0 , 1,
-		1, 0 , 0,
-		1, 0 , 0,
-		1, 0 , 0,
-		0, 0 , 1,
-		0, 0 , 1
-	];
-
-	var colorElements = []
-
-	var colorBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 	
-	colorBuffer.itemSize = 3; //Atributes for the buffer. SIze and number of items
-	colorBuffer.numItems = 8;
+	
+	checkQuadrants(angles, function(coordinates){
+		var vertices = [];
+		for (i in coordinates){
+			vertices.concat(coordinates[i]);
+		}
+		console.log(vertices);
+		draw(vertices);
+	});
 
-	gl.vertexAttribPointer(program.colorAttrib, colorBuffer.itemSize , gl.FLOAT, false , 0, 0);
-	/*
-	 2___ 3 
-	 |\  |		//Square is defined in this case as a triangle strip, two triangles combined
-	 | \ | 
-	0|__\|1
-	*/
+	
+	function draw(vertices){
+		
+		var c = document.getElementById('c');
+		var gl = c.getContext('experimental-webgl');
 
-	gl.drawArrays(gl.TRIANGLE_FAN, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
+		//Define VERTEX SHADER and FRAGMENT SHADER
+		vs = document.getElementById('vshader').textContent;
+		fs = document.getElementById('fshader').textContent;
+
+
+		var program = createProgram(vs,fs);
+		gl.useProgram(program);
+
+		program.vertexPosAttrib = gl.getAttribLocation(program, 'aVertexPosition');
+		program.colorAttrib = gl.getAttribLocation(program, 'aColorPosition');
+
+		gl.enableVertexAttribArray(program.vertexPosAttrib);
+		gl.enableVertexAttribArray(program.colorAttrib);
+
+
+		//To create some geometry we need some BUFFER to hold some VERTEX data
+		var vertexPosBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
+		//var vertices = [0, 0 , 0, -1, 0.8, -1, 1.0, -0.8, 1, 0 , 0, 1, -1, 0, 0, -1] //coordenates range from -1 to 1. So this will cover all the canvas
+
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
+																					//once and draw it several times
+		vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
+		vertexPosBuffer.numItems = 3;
+		gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+
+		var colors = [
+			0, 0 , 1,
+			0, 0 , 1,
+			1, 0 , 0,
+		];
+
+		var colorElements = []
+
+		var colorBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+		
+		colorBuffer.itemSize = 3; //Atributes for the buffer. SIze and number of items
+		colorBuffer.numItems = 3;
+
+		gl.vertexAttribPointer(program.colorAttrib, colorBuffer.itemSize , gl.FLOAT, false , 0, 0);
+		/*
+		 2___ 3 
+		 |\  |		//Square is defined in this case as a triangle strip, two triangles combined
+		 | \ | 
+		0|__\|1
+		*/
+
+		gl.drawArrays(gl.TRIANGLE_FAN, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
+	}
+
+
 
 	</script>
 

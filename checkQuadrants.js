@@ -3,16 +3,16 @@ function toRad(angle){
 	return angle*(Math.PI/180);
 }
 
-function checkQuadrants(allAngles){
+function checkQuadrants(allAngles, callback){
 
 	var restAngle = 0;
 	var sumAngles = 0;
 	var angleToUse;
-	var coordinates = [];
+	var coordinates = [[0,0]];
 	var checked = {};
 
 	firstQuadrant(allAngles, function(){
-		console.log(coordinates);
+		callback(coordinates)
 	});
 
 
