@@ -31,7 +31,7 @@
 	<script>
 
 	var angles = [50.0, 50.0, 70.0, 30.0];
-	
+
 	
 	checkQuadrants(angles, function(coordinates){
 		var vertices = [];
@@ -43,10 +43,10 @@
 	});
 
 	
+	var c = document.getElementById('c');
+	var gl = c.getContext('experimental-webgl');
+
 	function draw(vertices){
-		
-		var c = document.getElementById('c');
-		var gl = c.getContext('experimental-webgl');
 
 		//Define VERTEX SHADER and FRAGMENT SHADER
 		vs = document.getElementById('vshader').textContent;
