@@ -105,6 +105,7 @@ function checkQuadrants(allAngles, callback){
 					angleToUse = angles[i] - restAngle;
 					sumAngles = sumAngles + angleToUse;
 				}
+				console.log(angleToUse);
 				if(sumAngles <= 225) coordinates.push([-Math.tan(toRad(angleToUse)), -1]);
 				else if(sumAngles == 270) coordinates.push([-1, 0]);
 				else coordinates.push([-1, -Math.tan(toRad(90 - angleToUse))]);
