@@ -90,6 +90,7 @@ function checkQuadrants(allAngles, callback){
 				if (restAngle!=0){
 					console.log(restAngle);
 					sumAngles = sumAngles + restAngle;
+					console.log(sumAngles);
 					angleToUse = restAngle;
 					checked[i] = true;
 					restAngle = 0;
