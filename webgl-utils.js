@@ -50,8 +50,7 @@ function screenQuad(){ //Creates a buffer on the context and append the data to 
 }
 
 function linkProgram(program) { //get shaders, attach shaders to the program and link them
-	console.log(program.vshaderSource);
-	console.log(program.fshaderSource);
+
 	var vshader = createShader(program.vshaderSource, gl.VERTEX_SHADER);
 	var fshader = createShader(program.fshaderSource, gl.FRAGMENT_SHADER);
 	gl.attachShader(program, vshader);
