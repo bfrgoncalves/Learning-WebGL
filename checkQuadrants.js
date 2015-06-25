@@ -29,8 +29,8 @@ function checkQuadrants(allAngles){
 					sumAngles = sumAngles + angles[i];
 					angleToUse = angles[i];
 					checked[angles[i]] = true;
-					if(angleToUse <= 60) coordinates.push([Math.tan(toRad(angleToUse)), 1]);
-					else if(angleToUse == 90) coordinates.push([1, 0]);
+					if(sumAngles <= 60) coordinates.push([Math.tan(toRad(angleToUse)), 1]);
+					else if(sumAngles == 90) coordinates.push([1, 0]);
 					else coordinates.push([1, Math.tan(toRad(angleToUse))]);
 				}
 				else if(sumAngles < 90) {
@@ -38,8 +38,8 @@ function checkQuadrants(allAngles){
 					angleToUse = angles[i] - restAngle;
 					sumAngles = sumAngles + angleToUse;
 					console.log(angleToUse);
-					if(angleToUse <= 60) coordinates.push([Math.tan(toRad(angleToUse)), 1]);
-					else if(angleToUse == 90) coordinates.push([1, 0]);
+					if(sumAngles <= 60) coordinates.push([Math.tan(toRad(angleToUse)), 1]);
+					else if(sumAngles == 90) coordinates.push([1, 0]);
 					else coordinates.push([1, Math.tan(toRad(angleToUse))]);
 				}
 			}
