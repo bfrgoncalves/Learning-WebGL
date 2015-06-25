@@ -32,6 +32,7 @@
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
+	var offset = [1, 1];
 
 	//Define VERTEX SHADER and FRAGMENT SHADER
 	vs = document.getElementById('vshader').textContent;
@@ -43,10 +44,13 @@
 
 	program.vertexPosAttrib = gl.getAttribLocation(program, 'aVertexPosition');
 	program.colorAttrib = gl.getAttribLocation(program, 'aColorPosition');
+	program.offsetUniform = gl.getUniformLocation(program,'uOffset'); //get the position of the uniform
 	console.log(program.vertexPosAttrib);
 	console.log(program.colorAttrib);
 	gl.enableVertexAttribArray(program.vertexPosAttrib);
 	gl.enableVertexAttribArray(program.colorAttrib);
+	gl.uniform2f(program.offsetUniform, offset[0], offset[1]); //passing the values to the location of the uniform inside the program
+
 
 
 	//To create some geometry we need some BUFFER to hold some VERTEX data
