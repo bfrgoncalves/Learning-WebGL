@@ -62,8 +62,10 @@
 	var program = createProgram(vs,fs);
 	gl.useProgram(program);
 
-	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
-	program.colorAttrib = gl.getAttribLocation(program,'aColor');
+	program.vertexPosAttrib = gl.getAttribLocation(program, 'aVertexPosition');
+	program.colorAttrib = gl.getAttribLocation(program, 'aColor');
+	console.log(program.vertexPosAttrib);
+	console.log(program.colorAttrib);
 	gl.enableVertexAttribArray(program.vertexPosAttrib);
 	gl.enableVertexAttribArray(program.colorAttrib);
 
@@ -72,13 +74,12 @@
 	var vertexPosBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
 	var vertices = [-1, -1 , 1, -1, -1, 1 , 1, 1, 0, 0, 0, 1, 1, 0] //coordenates range from -1 to 1. So this will cover all the canvas
-	
 
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
-	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
 																				//once and draw it several times
 	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
 	vertexPosBuffer.numItems = 7;
+	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
 
 	var colors = [
 		0, 0 , 1,
