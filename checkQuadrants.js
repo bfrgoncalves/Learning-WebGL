@@ -17,7 +17,6 @@ function checkQuadrants(allAngles, callback){
 
 	firstQuadrant(allAngles, function(){
 		secondQuadrant(allAngles, function(){
-			console.log(coordinates);
 			thirdQuadrant(allAngles, function(){
 				console.log(coordinates);
 				callback(coordinates);
@@ -86,6 +85,7 @@ function checkQuadrants(allAngles, callback){
 			if (sumAngles == 270) break;
 			if (!checked[i]){
 				if (restAngle!=0){
+					console.log(restAngle);
 					sumAngles = sumAngles + restAngle;
 					angleToUse = restAngle;
 					checked[angles[i]] = true;
