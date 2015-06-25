@@ -54,7 +54,7 @@
 	checkQuadrants(angles, function(coordinates){
 		var vertices = [];
 		for (i in coordinates){
-			vertices.concat(coordinates[i]);
+			vertices = vertices.concat(coordinates[i]);
 		}
 		console.log(vertices);
 		draw(vertices, gl);
