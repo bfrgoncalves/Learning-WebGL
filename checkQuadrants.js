@@ -26,7 +26,6 @@ function checkQuadrants(allAngles, callback){
 	function firstQuadrant(angles, callback){
 		
 		for(i=0; i <angles.length;i++){
-			console.log(angles[i]);
 			if (sumAngles == 90) break;
 			if (!checked[i]){
 				if(angles[i] + sumAngles <= 90){
@@ -73,7 +72,7 @@ function checkQuadrants(allAngles, callback){
 				}
 				if(sumAngles <= 135) coordinates.push([1, -Math.tan(toRad(angleToUse))]);
 				else if(sumAngles == 180) coordinates.push([1, 0]);
-				else coordinates.push([-Math.tan(toRad(90 - angleToUse)), 1]);
+				else coordinates.push([1, -Math.tan(toRad(90 - angleToUse))]);
 			}
 		}
 		callback();
