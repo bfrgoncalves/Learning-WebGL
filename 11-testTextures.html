@@ -31,19 +31,33 @@
 
 
 
-	// var angles = [100, 50, 20, 100];
-	// current
+	var angles = [100, 50, 20, 100];
+	var currentCoordinate = [0,1];
+	var sumAngles = 0;
+	var coordinates = [];
+	var xCoord;
+	var yCoord;
 
-	// for(i in angles){
+	for(i in angles){
+		if (sumAngles <= 90){
+			if (angles[i] <= 90) sumAngles += angles[i];
+			else sumAngles += 90;
 
-	// }
+			if  (sumAngles < 60){
+				yCoord = 1;
+				xCoord = Math.tan(sumAngles)*yCoord;
+				coordinates.push([xCoord, yCoord]);
+			} 
+			else{
+				xCoord = 1;
+				yCoord = Math.tan(sumAngles)*yCoord;
+				coordinates.push([xCoord, yCoord]);
+			}
 
+		}
+	}
 
-
-
-
-
-
+	console.log(coordinates);
 
 
 
