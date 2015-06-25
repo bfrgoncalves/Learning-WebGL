@@ -8,7 +8,7 @@
 		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
 		varying vec3 Color;
 		void main(){
-			vTexCoord = aVertexPosition;
+			vTexCoord = aVertexPosition*0.5;
 			Color = aColorPosition;
 			gl_Position = vec4(aVertexPosition, 0, 1);
 		}
