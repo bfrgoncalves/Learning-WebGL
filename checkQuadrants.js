@@ -8,6 +8,7 @@ function checkQuadrants(allAngles, callback){
 	var restAngle = 0;
 	var sumAngles = 0;
 	var angleToUse;
+	var prevAngle;
 	var coordinates = [[0,0], [0,1]];
 	var checked = {};
 	
@@ -77,7 +78,7 @@ function checkQuadrants(allAngles, callback){
 				}
 				if(sumAngles <= 135) coordinates.push([1, -Math.tan(toRad(angleToUse))]);
 				else if(sumAngles == 180) coordinates.push([0, -1]);
-				else coordinates.push([1, -Math.tan(toRad(angleToUse))]);
+				else coordinates.push([-Math.tan(toRad(90 - angleToUse)), -1]);
 			}
 		}
 		callback();
