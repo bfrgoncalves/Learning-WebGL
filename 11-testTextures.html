@@ -2,6 +2,7 @@
 <html>
 	<canvas id = 'c' width = '400' height = '400' style="border:1px solid #000000;"></canvas>
 	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
+	<script src = 'checkQuadrants.js'></script> 
 	<script id = 'vshader' type = 'x-shader'>
 		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
 		attribute vec3 aColorPosition;
@@ -22,12 +23,15 @@
 
 			gl_FragColor = vec4(Color, 1);
 
-			// if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) >= 1.0){
-			// 	gl_FragColor = vec4(0, 1, 1, 0);
-			// }	
+			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) >= 1.0){
+			 	gl_FragColor = vec4(0, 1, 1, 0);
+			}	
 		}
 	</script>
 	<script>
+
+	var angles = [100.0, 110.0, 70.0, 30.0];
+	checkQuadrants(angles);
 
 
 	var c = document.getElementById('c');
