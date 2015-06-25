@@ -18,7 +18,10 @@ function checkQuadrants(allAngles, callback){
 	firstQuadrant(allAngles, function(){
 		secondQuadrant(allAngles, function(){
 			console.log(coordinates);
-			callback(coordinates);
+			thirdQuadrant(allAngles, function(){
+				console.log(coordinates);
+				callback(coordinates);
+			})
 		})
 	});
 
