@@ -10,6 +10,10 @@ function checkQuadrants(allAngles, callback){
 	var angleToUse;
 	var coordinates = [[0,0], [0,1]];
 	var checked = {};
+	
+	for (i=0; i <allAngles;i++){
+		checked[i] = false;
+	}
 
 	firstQuadrant(allAngles, function(){
 		secondQuadrant(allAngles, function(){
@@ -21,10 +25,10 @@ function checkQuadrants(allAngles, callback){
 
 	function firstQuadrant(angles, callback){
 		
-		for(i in angles){
+		for(i=0; i <angles;i++){
 			console.log(angles[i]);
 			if (sumAngles == 90) break;
-			if (!checked[angles[i]]){
+			if (!checked[i]){
 				if(angles[i] + sumAngles <= 90){
 					sumAngles = sumAngles + angles[i];
 					angleToUse = angles[i];
@@ -47,9 +51,9 @@ function checkQuadrants(allAngles, callback){
 
 	function secondQuadrant(angles, callback){
 		
-		for(i in angles){
+		for(i=0; i <angles;i++){
 			if (sumAngles == 180) break;
-			if (!checked[angles[i]]){
+			if (!checked[i]){
 				if (restAngle!=0){
 					sumAngles = sumAngles + restAngle;
 					angleToUse = restAngle;
