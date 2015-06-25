@@ -36,6 +36,7 @@ function checkQuadrants(allAngles){
 					restAngle = sumAngles + angles[i] - 90;
 					angleToUse = angles[i] - restAngle;
 					sumAngles = sumAngles + angleToUse;
+					console.log(angleToUse);
 					if(angleToUse <= 60) coordinates.push([Math.tan(toRad(angleToUse)), 1]);
 					else coordinates.push([1, Math.tan(toRad(angleToUse))]);
 				}
