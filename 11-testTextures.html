@@ -8,7 +8,7 @@
 		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
 		varying vec3 Color;
 		void main(){
-			vTexCoord = aVertexPosition + vec2(0.5,0.5);
+			vTexCoord = aVertexPosition;
 			Color = aColorPosition;
 			gl_Position = vec4(aVertexPosition, 0, 1);
 		}
@@ -51,7 +51,7 @@
 	//To create some geometry we need some BUFFER to hold some VERTEX data
 	var vertexPosBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
-	var vertices = [0, 0 , 0, -1, 0.8, -0.8, 0.8, -0.8, 1, 0 , 0, 1, -1, 0, 0, -1] //coordenates range from -1 to 1. So this will cover all the canvas
+	var vertices = [0, 0 , 0, -1, 0.8, -1, 1.0, -0.8, 1, 0 , 0, 1, -1, 0, 0, -1] //coordenates range from -1 to 1. So this will cover all the canvas
 
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
 																				//once and draw it several times
