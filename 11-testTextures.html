@@ -4,7 +4,7 @@
 	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
 	<script id = 'vshader' type = 'x-shader'>
 		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
-		attribute vec3 aColor;
+		attribute vec3 aColorPosition;
 		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
 		varying vec3 Color;
 		void main(){
@@ -22,10 +22,7 @@
 
 			gl_FragColor = vec4(Color, 1);
 
-			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
-				gl_FragColor = vec4(0, 0, 1, 1);
-			}
-			else{
+			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) >= 1.0){
 				gl_FragColor = vec4(0, 1, 1, 0);
 			}	
 		}
@@ -63,7 +60,7 @@
 	gl.useProgram(program);
 
 	program.vertexPosAttrib = gl.getAttribLocation(program, 'aVertexPosition');
-	program.colorAttrib = gl.getAttribLocation(program, 'aColor');
+	program.colorAttrib = gl.getAttribLocation(program, 'aColorPosition');
 	console.log(program.vertexPosAttrib);
 	console.log(program.colorAttrib);
 	gl.enableVertexAttribArray(program.vertexPosAttrib);
