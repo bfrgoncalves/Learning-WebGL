@@ -19,8 +19,10 @@ function checkQuadrants(allAngles, callback){
 	firstQuadrant(allAngles, function(){
 		secondQuadrant(allAngles, function(){
 			thirdQuadrant(allAngles, function(){
-				console.log(coordinates);
-				callback(coordinates);
+				fourthQuadrant(allAngles, function(){
+					console.log(coordinates);
+					callback(coordinates);
+				});
 			})
 		})
 	});
@@ -108,6 +110,37 @@ function checkQuadrants(allAngles, callback){
 				if(sumAngles <= 225) coordinates.push([-Math.tan(toRad(angleToUse)), -1]);
 				else if(sumAngles == 270) coordinates.push([-1, 0]);
 				else coordinates.push([-1, -Math.tan(toRad(90 - angleToUse))]);
+			}
+		}
+		callback();
+	}
+
+	function fourthQuadrant(angles, callback){
+		
+		for(i=0; i <angles.length;i++){
+			if (sumAngles == 360) break;
+			if (checked[i] == false){
+				if (restAngle!=0){
+					console.log(restAngle);
+					sumAngles = sumAngles + restAngle;
+					console.log(sumAngles);
+					angleToUse = restAngle;
+					checked[i] = true;
+					restAngle = 0;
+				}
+				else if(angles[i] + sumAngles <= 360){
+					sumAngles = sumAngles + angles[i];
+					angleToUse = sumAngles - 270;
+					checked[i] = true;
+				}
+				else if(sumAngles < 360) {
+					restAngle = sumAngles + angles[i] - 360;
+					angleToUse = angles[i] - restAngle;
+					sumAngles = sumAngles + angleToUse;
+				}
+				if(sumAngles <= 315) coordinates.push([-1, Math.tan(toRad(angleToUse))]);
+				else if(sumAngles == 360) coordinates.push([-1, 0]);
+				else coordinates.push([-Math.tan(toRad(90 - angleToUse)), 1]);
 			}
 		}
 		callback();
