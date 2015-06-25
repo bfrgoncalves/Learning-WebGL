@@ -46,22 +46,22 @@
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
 
+
+	//Define VERTEX SHADER and FRAGMENT SHADER
+	vs = document.getElementById('vshader').textContent;
+	fs = document.getElementById('fshader').textContent;
+
+
+	var program = createProgram(vs,fs);
+	gl.useProgram(program);
+
+	program.vertexPosAttrib = gl.getAttribLocation(program, 'aVertexPosition');
+	program.colorAttrib = gl.getAttribLocation(program, 'aColorPosition');
+
+	gl.enableVertexAttribArray(program.vertexPosAttrib);
+	gl.enableVertexAttribArray(program.colorAttrib);
+
 	function draw(vertices){
-
-		//Define VERTEX SHADER and FRAGMENT SHADER
-		vs = document.getElementById('vshader').textContent;
-		fs = document.getElementById('fshader').textContent;
-
-
-		var program = createProgram(vs,fs);
-		gl.useProgram(program);
-
-		program.vertexPosAttrib = gl.getAttribLocation(program, 'aVertexPosition');
-		program.colorAttrib = gl.getAttribLocation(program, 'aColorPosition');
-
-		gl.enableVertexAttribArray(program.vertexPosAttrib);
-		gl.enableVertexAttribArray(program.colorAttrib);
-
 
 		//To create some geometry we need some BUFFER to hold some VERTEX data
 		var vertexPosBuffer = gl.createBuffer();
