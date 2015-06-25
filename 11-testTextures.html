@@ -7,8 +7,9 @@
 		attribute vec3 aColorPosition;
 		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
 		varying vec3 Color;
+		uniform vec2 uOffset;
 		void main(){
-			vTexCoord = aVertexPosition;
+			vTexCoord = aVertexPosition * uOffset;
 			Color = aColorPosition;
 			gl_Position = vec4(aVertexPosition, 0, 1);
 		}
@@ -32,6 +33,7 @@
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
+	var offset = [0.5, 0.5];
 
 	//Define VERTEX SHADER and FRAGMENT SHADER
 	vs = document.getElementById('vshader').textContent;
@@ -43,10 +45,12 @@
 
 	program.vertexPosAttrib = gl.getAttribLocation(program, 'aVertexPosition');
 	program.colorAttrib = gl.getAttribLocation(program, 'aColorPosition');
+	program.offsetUniform = gl.getUniformLocation(program,'uOffset');
 	console.log(program.vertexPosAttrib);
 	console.log(program.colorAttrib);
 	gl.enableVertexAttribArray(program.vertexPosAttrib);
 	gl.enableVertexAttribArray(program.colorAttrib);
+	gl.uniform2f(program.offsetUniform, offset[0], offset[1]);
 
 
 	//To create some geometry we need some BUFFER to hold some VERTEX data
