@@ -32,17 +32,6 @@
 
 	var angles = [50.0, 50.0, 70.0, 30.0];
 
-	
-	checkQuadrants(angles, function(coordinates){
-		var vertices = [];
-		for (i in coordinates){
-			vertices.concat(coordinates[i]);
-		}
-		console.log(vertices);
-		draw(vertices);
-	});
-
-	
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
 
@@ -60,6 +49,18 @@
 
 	gl.enableVertexAttribArray(program.vertexPosAttrib);
 	gl.enableVertexAttribArray(program.colorAttrib);
+
+	
+	checkQuadrants(angles, function(coordinates){
+		var vertices = [];
+		for (i in coordinates){
+			vertices.concat(coordinates[i]);
+		}
+		console.log(vertices);
+		draw(vertices, gl);
+	});
+
+	
 
 	function draw(vertices){
 
