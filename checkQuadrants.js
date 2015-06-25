@@ -66,12 +66,12 @@ function checkQuadrants(allAngles, callback){
 					checked[angles[i]] = true;
 				}
 				else if(sumAngles < 180) {
-					restAngle = sumAngles + angles[i] - 90;
+					restAngle = sumAngles + angles[i] - 180;
 					angleToUse = angles[i] - restAngle;
 					sumAngles = sumAngles + angleToUse;
 				}
 				if(sumAngles <= 135) coordinates.push([1, -Math.tan(toRad(angleToUse))]);
-				else if(sumAngles == 180) coordinates.push([1, 0]);
+				else if(sumAngles == 180) coordinates.push([0, -1]);
 				else coordinates.push([1, -Math.tan(toRad(90 - angleToUse))]);
 			}
 		}
