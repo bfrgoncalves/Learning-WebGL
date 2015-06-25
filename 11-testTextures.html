@@ -30,7 +30,7 @@
 	</script>
 	<script>
 
-	var angles = [50.0, 50.0, 70.0, 30.0];
+	var angles = [50.0, 50.0, 70.0, 30.0, 30.0, 50.0, 40.0];
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
@@ -72,7 +72,7 @@
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
 																					//once and draw it several times
 		vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
-		vertexPosBuffer.numItems = 8;
+		vertexPosBuffer.numItems = 10;
 		gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
 
 		var colors = [
@@ -82,6 +82,8 @@
 			1, 0 , 0,
 			0, 0 , 1,
 			0, 0 , 1,
+			1, 0 , 0,
+			1, 0 , 0,
 			1, 0 , 0,
 			1, 0 , 0
 		];
@@ -93,7 +95,7 @@
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 		
 		colorBuffer.itemSize = 3; //Atributes for the buffer. SIze and number of items
-		colorBuffer.numItems = 8;
+		colorBuffer.numItems = 10;
 
 		gl.vertexAttribPointer(program.colorAttrib, colorBuffer.itemSize , gl.FLOAT, false , 0, 0);
 		/*
