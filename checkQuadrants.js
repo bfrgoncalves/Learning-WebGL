@@ -11,7 +11,7 @@ function checkQuadrants(allAngles, callback){
 	var coordinates = [[0,0], [0,1]];
 	var checked = {};
 	
-	for (i=0; i <allAngles;i++){
+	for (i=0; i <allAngles.length;i++){
 		checked[i] = false;
 	}
 
