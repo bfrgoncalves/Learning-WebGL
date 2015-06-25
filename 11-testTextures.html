@@ -5,9 +5,9 @@
 	<script id = 'vshader' type = 'x-shader'>
 		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
 		attribute vec3 aColorPosition;
+		uniform vec2 uOffset;
 		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
 		varying vec3 Color;
-		uniform vec2 uOffset;
 		void main(){
 			vTexCoord = aVertexPosition * uOffset;
 			Color = aColorPosition;
