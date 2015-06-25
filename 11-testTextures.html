@@ -3,48 +3,28 @@
 	<canvas id = 'c' width = '400' height = '400' style="border:1px solid #000000;"></canvas>
 	<script src = 'webgl-utils.js'></script> <!-- USES THE UTILS DEFINED -->
 	<script id = 'vshader' type = 'x-shader'>
-		attribute vec3 aVertexPosition;
-  		attribute vec4 aVertexColor;
-	    varying vec4 vColor;
-	    void main() {
-	       vColor = aVertexColor;
-	       gl_Position = vec4(aVertexPosition, 1.0);
-	    }
-
+		attribute vec2 aVertexPosition; //Atributes are passed per vertex data
+		varying vec2 vTexCoord; //value that will pass to the fragment shader. In this case, the texture coordenate
+		void main(){
+			vTexCoord = aVertexPosition;
+			gl_Position = vec4(aVertexPosition, 0, 1);
+		}
 	</script>
 	<script id = 'fshader' type = 'x-shader'>
 		precision mediump float;
-		varying vec4 vColor;
+		varying vec2 vTexCoord; //get the passing value from the vertex shader
+		
+		void main(){
 
-	    void main() {
-	       gl_FragColor = vColor;
-	    }
-	
+			if ((vTexCoord.x) * (vTexCoord.x) + (vTexCoord.y) * (vTexCoord.y) < 1.0){
+				gl_FragColor = vec4(0, 0, 1, 1);
+			}
+			else{
+				gl_FragColor = vec4(1, 1, 1, 0);
+			}	
+		}
 	</script>
 	<script>
-
-	// var vertices = [
- //    //  Position   Color             Texcoords
- //        -1.0,  1.0, 1.0, 0.0, 0.0, 0.0, 0.0, // Top-left
- //         1.0,  1.0, 0.0, 1.0, 0.0, 1.0, 0.0, // Top-right
- //         1.0, -1.0, 0.0, 0.0, 1.0, 1.0, 1.0, // Bottom-right
- //        -1.0, -1.0, 1.0, 1.0, 1.0, 0.0, 1.0  // Bottom-left
- //    ];
-
- 	var vertices = [
-         1.0,  1.0,  0.0,
-        -1.0,  1.0,  0.0,
-         1.0, -1.0,  0.0,
-        -1.0, -1.0,  0.0
-    ];
-
-    var colors = []
-    for (var i=0; i < 4; i++) {
-      colors = colors.concat([0.5, 0.5, 1.0, 1.0]);
-    }
-
-    console.log(colors);
-
 
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
@@ -52,19 +32,18 @@
 	//To create some geometry we need some BUFFER to hold some VERTEX data
 	var vertexPosBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
+	var vertices = [-1, -1 , 1, -1, -1, 1 , 1, 1] //coordenates range from -1 to 1. So this will cover all the canvas
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
-	vertexPosBuffer.itemSize = 3; //Atributes for the buffer. SIze and number of items
-	vertexPosBuffer.numItems = 4;
-
-
-	var colorbuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, colorbuffer);
-
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 																				//once and draw it several times
-	colorbuffer.itemSize = 4; //Atributes for the buffer. SIze and number of items
-	colorbuffer.numItems = 4;
-
+	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
+	vertexPosBuffer.numItems = 4;
+	vertexPosBuffer.numberOfParts = 2;
+	/*
+	 2___ 3 
+	 |\  |		//Square is defined in this case as a triangle strip, two triangles combined
+	 | \ | 
+	0|__\|1
+	*/
 
 	//Define VERTEX SHADER and FRAGMENT SHADER
 	vs = document.getElementById('vshader').textContent;
@@ -73,22 +52,11 @@
 
 	var program = createProgram(vs,fs);
 	gl.useProgram(program);
-
 	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
-	gl.enableVertexAttribArray(program.vertexPosAttrib);
 
-	program.vertexColor = gl.getAttribLocation(program,'aVertexColor');
-	gl.enableVertexAttribArray(program.vertexColor);
-
-	drawScene();
-
-	function drawScene(){
-
-
-		gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize, gl.FLOAT, false , 0, 0); 
-		gl.vertexAttribPointer(program.vertexColor, colorbuffer.itemSize, gl.FLOAT, false , 0, 0);
-		gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertexPosBuffer.numItems);
-	}
+	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
+	gl.finish();
+	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
 
 	</script>
 
