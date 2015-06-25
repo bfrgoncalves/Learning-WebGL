@@ -25,7 +25,7 @@ function checkQuadrants(allAngles, callback){
 
 	function firstQuadrant(angles, callback){
 		
-		for(i=0; i <angles;i++){
+		for(i=0; i <angles.length;i++){
 			console.log(angles[i]);
 			if (sumAngles == 90) break;
 			if (!checked[i]){
@@ -51,7 +51,7 @@ function checkQuadrants(allAngles, callback){
 
 	function secondQuadrant(angles, callback){
 		
-		for(i=0; i <angles;i++){
+		for(i=0; i <angles.length;i++){
 			if (sumAngles == 180) break;
 			if (!checked[i]){
 				if (restAngle!=0){
