@@ -96,7 +96,8 @@
 
 	program.vertexPosAttrib = gl.getAttribLocation(program,'aVertexPosition');
 	program.colorAttrib = gl.getAttribLocation(program,'aColor');
-	gl.enableVertexAttribArray(program.vertexPosArray);
+	gl.enableVertexAttribArray(program.vertexPosAttrib);
+	gl.enableVertexAttribArray(program.colorAttrib);
 
 	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
 	gl.vertexAttribPointer(program.colorAttrib, colorBuffer.itemSize , gl.FLOAT, false , 0, 0);
