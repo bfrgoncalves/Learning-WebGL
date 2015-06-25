@@ -8,7 +8,7 @@ function checkQuadrants(allAngles, callback){
 	var restAngle = 0;
 	var sumAngles = 0;
 	var angleToUse;
-	var coordinates = [[0,0]];
+	var coordinates = [[0,0], [0,1]];
 	var checked = {};
 
 	firstQuadrant(allAngles, function(){
