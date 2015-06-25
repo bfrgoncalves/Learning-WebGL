@@ -92,8 +92,8 @@
 	gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 	
-	vertexPosBuffer.itemSize = 3; //Atributes for the buffer. SIze and number of items
-	vertexPosBuffer.numItems = 7;
+	colorBuffer.itemSize = 3; //Atributes for the buffer. SIze and number of items
+	colorBuffer.numItems = 7;
 
 	gl.vertexAttribPointer(program.colorAttrib, colorBuffer.itemSize , gl.FLOAT, false , 0, 0);
 	/*
