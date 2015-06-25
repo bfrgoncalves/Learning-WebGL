@@ -32,7 +32,7 @@ function checkQuadrants(allAngles){
 					console.log(angleToUse);
 					if(sumAngles <= 45) coordinates.push([Math.tan(toRad(angleToUse)), 1]);
 					else if(sumAngles == 90) coordinates.push([1, 0]);
-					else coordinates.push([1, Math.tan(toRad(angleToUse))]);
+					else coordinates.push([1, Math.tan(toRad(90 - angleToUse))]);
 				}
 				else if(sumAngles < 90) {
 					restAngle = sumAngles + angles[i] - 90;
@@ -41,7 +41,7 @@ function checkQuadrants(allAngles){
 					console.log(angleToUse);
 					if(sumAngles <= 45) coordinates.push([Math.tan(toRad(angleToUse)), 1]);
 					else if(sumAngles == 90) coordinates.push([1, 0]);
-					else coordinates.push([1, Math.tan(toRad(angleToUse))]);
+					else coordinates.push([1, Math.tan(toRad(90 - angleToUse))]);
 				}
 			}
 		}
