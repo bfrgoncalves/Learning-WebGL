@@ -30,47 +30,6 @@
 	<script>
 
 
-
-	var angles = [100, 50, 20, 100];
-	var currentCoordinate = [0,1];
-	var sumAngles = 0;
-	var coordinates = [];
-	var xCoord;
-	var yCoord;
-	var angleToUse;
-	var moreAngle;
-
-
-	for(i in angles){
-
-		if (sumAngles <= 90){
-			if (angles[i] <= 90) sumAngles = sumAngles + angles[i];
-			else{
-				moreAngle = angles[i] - 90;
-				angleToUse = angles[i] - moreAngle;
-				console.log(angleToUse);
-				sumAngles = sumAngles + angles[i];
-			} 
-
-			if  (sumAngles < 60){
-				yCoord = 1;
-				xCoord = Math.tan(angleToUse);
-				coordinates.push([xCoord, yCoord]);
-			} 
-			else{
-				xCoord = 1;
-				yCoord = Math.tan(angleToUse);
-				coordinates.push([xCoord, yCoord]);
-			}
-
-		}
-	}
-
-	console.log(coordinates);
-
-
-
-
 	var c = document.getElementById('c');
 	var gl = c.getContext('experimental-webgl');
 
@@ -93,20 +52,17 @@
 	//To create some geometry we need some BUFFER to hold some VERTEX data
 	var vertexPosBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer); //Bind buffer to the Bind point named ARRAY_BUFFER
-	var vertices = [-1, -1 , 1, -1, -1, 1 , 1, 1, 0, 0, 0, 1, 1, 0, 1, 1] //coordenates range from -1 to 1. So this will cover all the canvas
+	var vertices = [0, 0 , 0, -1, 1, 0 , 0, 1, -1, 0] //coordenates range from -1 to 1. So this will cover all the canvas
 
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); //FLOAT32ARRAY is what we need to pass to the buffer. STATIC_DRAW means that we upload the data 
 																				//once and draw it several times
 	vertexPosBuffer.itemSize = 2; //Atributes for the buffer. SIze and number of items
-	vertexPosBuffer.numItems = 8;
+	vertexPosBuffer.numItems = 5;
 	gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize , gl.FLOAT, false , 0, 0); //Set the format of the IN data. 2 component, float and dont nedd to be normalized
 
 	var colors = [
 		0, 0 , 1,
 		0, 0 , 1,
-		0, 0 , 1,
-		0, 0 , 1,
-		1, 0 , 0,
 		1, 0 , 0,
 		1, 0 , 0,
 		1, 0 , 0
@@ -119,7 +75,7 @@
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 	
 	colorBuffer.itemSize = 3; //Atributes for the buffer. SIze and number of items
-	colorBuffer.numItems = 8;
+	colorBuffer.numItems = 5;
 
 	gl.vertexAttribPointer(program.colorAttrib, colorBuffer.itemSize , gl.FLOAT, false , 0, 0);
 	/*
@@ -129,7 +85,7 @@
 	0|__\|1
 	*/
 
-	gl.drawArrays(gl.TRIANGLE_STRIP, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
+	gl.drawArrays(gl.TRIANGLE_FAN, 0 , vertexPosBuffer.numItems); //Now takes 4 vertex instead of 3 like the triangle
 
 	</script>
 
