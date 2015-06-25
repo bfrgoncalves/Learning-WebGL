@@ -51,6 +51,7 @@ function checkQuadrants(allAngles, callback){
 					sumAngles = sumAngles + restAngle;
 					angleToUse = restAngle;
 					checked[angles[i]] = true;
+					restAngle = 0;
 				}
 				else if(angles[i] + sumAngles <= 180){
 					sumAngles = sumAngles + angles[i];
