@@ -37,21 +37,28 @@
 	var coordinates = [];
 	var xCoord;
 	var yCoord;
+	var angleToUse;
+	var moreAngle;
+
 
 	for(i in angles){
+
 		if (sumAngles <= 90){
-			console.log(sumAngles);
 			if (angles[i] <= 90) sumAngles = sumAngles + angles[i];
-			else sumAngles = sumAngles + 90;
+			else{
+				moreAngle = angles[i] - 90;
+				angleToUse = angles[i] - moreAngle;
+				sumAngles = sumAngles + angles[i];
+			} 
 
 			if  (sumAngles < 60){
 				yCoord = 1;
-				xCoord = Math.tan(angles[i]);
+				xCoord = Math.tan(angleToUse);
 				coordinates.push([xCoord, yCoord]);
 			} 
 			else{
 				xCoord = 1;
-				yCoord = Math.tan(angles[i]);
+				yCoord = Math.tan(angleToUse);
 				coordinates.push([xCoord, yCoord]);
 			}
 
