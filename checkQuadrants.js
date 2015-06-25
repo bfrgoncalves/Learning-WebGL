@@ -12,37 +12,59 @@ function checkQuadrants(allAngles, callback){
 	var checked = {};
 
 	firstQuadrant(allAngles, function(){
-		callback(coordinates)
+		secondQuadrant(allAngles, function(){
+			console.log(coordinates);
+			callback(coordinates);
+		})
 	});
-
-
-
-
-
 
 
 	function firstQuadrant(angles, callback){
 		
 		for(i in angles){
+			if (sumAngles == 90) break;
 			if (!checked[angles[i]]){
 				if(angles[i] + sumAngles <= 90){
 					sumAngles = sumAngles + angles[i];
 					angleToUse = angles[i];
 					checked[angles[i]] = true;
-					console.log(angleToUse);
-					if(sumAngles <= 45) coordinates.push([Math.tan(toRad(angleToUse)), 1]);
-					else if(sumAngles == 90) coordinates.push([1, 0]);
-					else coordinates.push([1, Math.tan(toRad(90 - angleToUse))]);
 				}
 				else if(sumAngles < 90) {
 					restAngle = sumAngles + angles[i] - 90;
 					angleToUse = angles[i] - restAngle;
 					sumAngles = sumAngles + angleToUse;
-					console.log(angleToUse);
-					if(sumAngles <= 45) coordinates.push([Math.tan(toRad(angleToUse)), 1]);
-					else if(sumAngles == 90) coordinates.push([1, 0]);
-					else coordinates.push([1, Math.tan(toRad(90 - angleToUse))]);
 				}
+				if(sumAngles <= 45) coordinates.push([Math.tan(toRad(angleToUse)), 1]);
+				else if(sumAngles == 90) coordinates.push([1, 0]);
+				else coordinates.push([1, Math.tan(toRad(90 - angleToUse))]);
+			}
+		}
+		callback();
+	}
+
+	function secondQuadrant(angles, callback){
+		
+		for(i in angles){
+			if (sumAngles == 180) break;
+			if (!checked[angles[i]]){
+				if (restAngle!=0){
+					sumAngles = sumAngles + restAngle;
+					angleToUse = restAngle;
+					checked[angles[i]] = true;
+				}
+				else if(angles[i] + sumAngles <= 180){
+					sumAngles = sumAngles + angles[i];
+					angleToUse = angles[i];
+					checked[angles[i]] = true;
+				}
+				else if(sumAngles < 180) {
+					restAngle = sumAngles + angles[i] - 90;
+					angleToUse = angles[i] - restAngle;
+					sumAngles = sumAngles + angleToUse;
+				}
+				if(sumAngles <= 135) coordinates.push([1, -Math.tan(toRad(angleToUse))]);
+				else if(sumAngles == 180) coordinates.push([1, 0]);
+				else coordinates.push([-Math.tan(toRad(90 - angleToUse)), 1]);
 			}
 		}
 		callback();
