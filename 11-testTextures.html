@@ -9,7 +9,7 @@
 		varying vec3 Color;
 		uniform vec2 uOffset;
 		void main(){
-			vTexCoord = aVertexPosition + uOffseto;
+			vTexCoord = aVertexPosition + uOffset;
 			Color = aColorPosition;
 			gl_Position = vec4(aVertexPosition, 0, 1);
 		}
